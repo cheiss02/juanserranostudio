@@ -1,0 +1,55 @@
+---
+import { getCollection } from "astro:content";
+import { Picture } from "astro:assets";
+import { getDictionary, categories as categorySlugs, type Locale } from "../i18n/index";
+import { site } from "../data/site";
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const dict = getDictionary(locale);
+const series = await getCollection("series");
+const prefix = locale === "es" ? "/es" : "";
+const alternatePath = locale === "es" ? "/services/" : "/es/services/";
+const servicesSchema = categorySlugs.map((slug) => ({
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: dict.categories[slug].title,
+  description: dict.categories[slug].description,
+  provider: { "@type": "ProfessionalService", name: site.name, url: site.url },
+  areaServed: site.serviceArea,
+}));
+---
+
+<SiteLayout title={`${dict.services.title} | ${dict.meta.titleSuffix}`} description={dict.services.description} locale={locale} alternatePath={alternatePath} structuredData={servicesSchema}>
+  <section class="page-intro">
+    <p class="eyebrow">Juan Serrano Studio</p>
+    <h1>{dict.services.title}</h1>
+    <p>{dict.services.lead}</p>
+  </section>
+  <section class="service-list">
+    {categorySlugs.map((slug, index) => {
+      const category = dict.categories[slug];
+      const service = dict.services.items[slug];
+      const project = series.find((entry) => entry.data.category === slug);
+      const imageAlt = project && (locale === "es" ? project.data.cover_alt_es : project.data.cover_alt_en);
+      return <article class="service-row" id={slug}>
+        <p class="service-count">0{index + 1}</p>
+        <figure class="service-visual">
+          {project && imageAlt && <Picture src={project.data.cover} alt={imageAlt} formats={["avif", "webp"]} widths={[480, 720, 1080]} sizes="(min-width: 1100px) 34vw, (min-width: 760px) 42vw, 100vw" loading="lazy" />}
+        </figure>
+        <div class="service-main">
+          <h2>{category.title}</h2>
+          <p class="service-summary">{service.summary}</p>
+          <p>{service.details}</p>
+          <h3>{locale === "es" ? "Incluye" : "What's included"}</h3>
+          <ul>{category.includes.map((item) => <li>{item}</li>)}</ul>
+        </div>
+        <div class="service-aside">
+          <p>{dict.services.pricing}</p>
+          <a class="button-link" href={`${prefix}/contact/`}>{dict.common.requestQuote}</a>
+        </div>
+      </article>;
+    })}
+  </section>
+</SiteLayout>

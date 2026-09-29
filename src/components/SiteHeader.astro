@@ -1,0 +1,57 @@
+---
+interface Props {
+  locale: "en" | "es";
+  overlay?: boolean;
+}
+
+import { getDictionary } from "../i18n/index";
+import { site } from "../data/site";
+
+const { locale, overlay = false } = Astro.props;
+const labels = getDictionary(locale).nav;
+const prefix = locale === "es" ? "/es" : "";
+const englishPath = locale === "en" ? Astro.url.pathname : Astro.url.pathname.replace(/^\/es(?=\/|$)/, "") || "/";
+const spanishPath = locale === "es" ? Astro.url.pathname : `/es${Astro.url.pathname === "/" ? "/" : Astro.url.pathname}`;
+---
+
+<header class:list={["site-header", overlay && "site-header-overlay"]}>
+  <a class="wordmark" href={locale === "en" ? "/" : "/es/"} aria-label="Juan Serrano Studio home">
+    Juan Serrano Studio
+  </a>
+  <nav class="desktop-nav" aria-label="Main navigation">
+    <a href={`${prefix}/portfolio/`}>{labels.portfolio}</a>
+    <a href={`${prefix}/services/`}>{labels.services}</a>
+    <a href={`${prefix}/about/`}>{labels.about}</a>
+    <a href={`${prefix}/contact/`}>{labels.contact}</a>
+    <span class="desktop-language-switch" aria-label={labels.language}>
+      <a href={englishPath} lang="en" aria-current={locale === "en" ? "page" : undefined}>EN</a>
+      <span aria-hidden="true">/</span>
+      <a href={spanishPath} lang="es" aria-current={locale === "es" ? "page" : undefined}>ES</a>
+    </span>
+  </nav>
+  <span class="header-rest-mark" aria-hidden="true"><span></span></span>
+  <div class="header-tools">
+    <div class="social-links">
+      {site.instagramUrl
+        ? <a href={site.instagramUrl} aria-label={labels.instagram} target="_blank" rel="me noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.8" cy="6.5" r="1.1" fill="currentColor"/></svg></a>
+        : <span class="social-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.8" cy="6.5" r="1.1" fill="currentColor"/></svg></span>}
+      {site.facebookUrl
+        ? <a href={site.facebookUrl} aria-label="Facebook" target="_blank" rel="me noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.4 21v-8.2h2.8l.4-3.2h-3.2V7.5c0-.9.3-1.5 1.6-1.5h1.7V3.1c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.5-4.1 4.2v2.4H7.5v3.2h2.7V21h3.2Z"/></svg></a>
+        : <span class="social-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M13.4 21v-8.2h2.8l.4-3.2h-3.2V7.5c0-.9.3-1.5 1.6-1.5h1.7V3.1c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.5-4.1 4.2v2.4H7.5v3.2h2.7V21h3.2Z"/></svg></span>}
+    </div>
+    <details class="mobile-menu">
+      <summary aria-label={locale === "es" ? "Abrir menú" : "Open menu"}><span></span><span></span></summary>
+      <nav class="mobile-nav" aria-label="Mobile navigation">
+        <a href={`${prefix}/portfolio/`}>{labels.portfolio}</a>
+        <a href={`${prefix}/services/`}>{labels.services}</a>
+        <a href={`${prefix}/about/`}>{labels.about}</a>
+        <a href={`${prefix}/contact/`}>{labels.contact}</a>
+        <span class="mobile-language-switch" aria-label={labels.language}>
+          <a href={englishPath} lang="en" aria-current={locale === "en" ? "page" : undefined}>EN</a>
+          <span aria-hidden="true">/</span>
+          <a href={spanishPath} lang="es" aria-current={locale === "es" ? "page" : undefined}>ES</a>
+        </span>
+      </nav>
+    </details>
+  </div>
+</header>

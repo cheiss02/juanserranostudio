@@ -1,0 +1,60 @@
+---
+import { Picture } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  series: CollectionEntry<"series">;
+  priority?: boolean;
+  locale?: "en" | "es";
+}
+
+const { series, priority = false, locale = "en" } = Astro.props;
+const { data, id } = series;
+const categoryNames = {
+  sports: locale === "es" ? "Deportes" : "Sports",
+  portrait: locale === "es" ? "Retrato" : "Portrait",
+  editorial: "Editorial",
+  weddings: locale === "es" ? "Bodas" : "Weddings",
+};
+const alt = locale === "es" ? data.cover_alt_es : data.cover_alt_en;
+const title = locale === "es" ? data.title_es : data.title_en;
+const href = `/${locale === "es" ? "es/" : ""}portfolio/${data.category}/${id}/`;
+const pictureProps = {
+  formats: ["avif", "webp"],
+  widths: [480, 720, 1080, 1440],
+  sizes: "(min-width: 1200px) 32vw, (min-width: 700px) 50vw, 100vw",
+};
+---
+
+<article class="series-tile">
+  <a class="tile-link" href={href} aria-label={`${title}, ${categoryNames[data.category]}`}>
+    <div class="tile-media">
+      <Picture
+        src={data.cover}
+        alt={alt}
+        {...pictureProps}
+        class="tile-image tile-image-primary"
+        loading={priority ? "eager" : "lazy"}
+        fetchpriority={priority ? "high" : "auto"}
+      />
+      <Picture
+        src={data.hover_image}
+        alt=""
+        {...pictureProps}
+        class="tile-image tile-image-hover"
+        loading="lazy"
+      />
+      <Picture
+        src={data.mobile_image}
+        alt={alt}
+        {...pictureProps}
+        class="tile-image tile-image-mobile"
+        loading={priority ? "eager" : "lazy"}
+      />
+    </div>
+    <div class="tile-caption">
+      <h2>{title}</h2>
+      <span>{categoryNames[data.category]}</span>
+    </div>
+  </a>
+</article>

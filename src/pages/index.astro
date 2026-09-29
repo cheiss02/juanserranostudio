@@ -1,0 +1,133 @@
+---
+import { getCollection } from "astro:content";
+import { Picture } from "astro:assets";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import SeriesTile from "../components/SeriesTile.astro";
+import { getDictionary } from "../i18n/index";
+
+const allSeries = await getCollection("series");
+const featuredOrder = ["quiet-light", "trackside", "the-long-day", "table-for-two"];
+const series = featuredOrder
+  .map((slug) => allSeries.find((project) => project.id === slug))
+  .filter((project) => project !== undefined);
+const dict = getDictionary("en");
+const categoryNames = {
+  sports: "Sports",
+  portrait: "Portrait",
+  editorial: "Editorial",
+  weddings: "Weddings",
+};
+---
+
+<SiteLayout
+  title={dict.meta.homeTitle}
+  description={dict.meta.homeDescription}
+>
+  <section class="home-viewer" aria-label={dict.common.selectedWork}>
+    <div class="viewer-track">
+      {series.map((project, index) => {
+        const title = project.data.title_en;
+        const alt = project.data.cover_alt_en;
+        const href = `/portfolio/${project.data.category}/${project.id}/`;
+        const previous = series[(index - 1 + series.length) % series.length];
+        const next = series[(index + 1) % series.length];
+        return (
+          <article class="viewer-slide" id={`frame-${index + 1}`} aria-label={`${index + 1} of ${series.length}`}>
+            <Picture
+              src={project.data.cover}
+              alt={alt}
+              formats={["avif", "webp"]}
+              widths={[720, 1080, 1440, 1920]}
+              sizes="100vw"
+              class="viewer-photo"
+              loading={index === 0 ? "eager" : "lazy"}
+              fetchpriority={index === 0 ? "high" : "auto"}
+            />
+            <div class="viewer-shade" aria-hidden="true"></div>
+            <a class="viewer-image-link" href={href} aria-label={`${title}, ${categoryNames[project.data.category]}`}>
+              {index === 0 ? <h1 class="visually-hidden">Juan Serrano Studio photography</h1> : <span class="visually-hidden">{title}</span>}
+            </a>
+            <div class="viewer-footer">
+              <span class="viewer-overview">Overview {String(index + 1).padStart(2, "0")} / {String(series.length).padStart(2, "0")}</span>
+              <nav class="viewer-arrows" aria-label="Featured series">
+                <a class="viewer-previous" href={`#frame-${((index - 1 + series.length) % series.length) + 1}`} aria-label={`Previous: ${previous?.data.title_en ?? "series"}`} aria-hidden={index === 0 ? "true" : undefined} tabindex={index === 0 ? -1 : undefined}><span aria-hidden="true"></span></a>
+                <a class="viewer-next" href={`#frame-${((index + 1) % series.length) + 1}`} aria-label={`Next: ${next?.data.title_en ?? "series"}`}><span aria-hidden="true"></span></a>
+              </nav>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+  <section id="work" class="home-work-section" aria-label={dict.common.selectedWork}>
+    <header class="home-work-heading">
+      <div>
+        <p>{dict.home.eyebrow}</p>
+        <h2>{dict.home.title}</h2>
+      </div>
+      <a href="/portfolio/">{dict.home.allWork}<span aria-hidden="true">↗</span></a>
+    </header>
+    <div class="home-grid">
+      {series.map((project) => <SeriesTile series={project} />)}
+    </div>
+    <nav class="home-category-index" aria-label={dict.nav.portfolio}>
+      <a href="/portfolio/sports/">Sports</a>
+      <a href="/portfolio/portrait/">Portrait</a>
+      <a href="/portfolio/editorial/">Editorial</a>
+      <a href="/portfolio/weddings/">Weddings</a>
+    </nav>
+  </section>
+</SiteLayout>
+
+<script>
+  const track = document.querySelector<HTMLElement>(".viewer-track");
+  const slides = Array.from(document.querySelectorAll<HTMLElement>(".viewer-slide"));
+  const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let activeIndex = 0;
+
+  if (track && slides.length > 1) {
+    const updateActiveSlide = () => {
+      const slideWidth = track.clientWidth;
+      activeIndex = Math.round(track.scrollLeft / slideWidth);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            activeIndex = slides.indexOf(entry.target as HTMLElement);
+          }
+        }
+      },
+      { root: track, threshold: 0.6 },
+    );
+
+    slides.forEach((slide) => observer.observe(slide));
+    track.addEventListener("scroll", updateActiveSlide, { passive: true });
+
+    track.querySelectorAll<HTMLAnchorElement>(".viewer-arrows a").forEach((arrow) => {
+      arrow.addEventListener("click", (event) => {
+        event.preventDefault();
+        const slideId = arrow.getAttribute("href")?.slice(1);
+        const targetIndex = slides.findIndex((slide) => slide.id === slideId);
+        const targetSlide = slides[targetIndex];
+        if (targetSlide) {
+          activeIndex = targetIndex;
+          track.scrollTo({ left: targetSlide.offsetLeft, behavior: "smooth" });
+        }
+      });
+    });
+
+    window.setInterval(() => {
+      if (
+        document.hidden ||
+        track.contains(document.activeElement) ||
+        motionPreference.matches
+      ) return;
+
+      activeIndex = (activeIndex + 1) % slides.length;
+      const nextSlide = slides[activeIndex];
+      if (nextSlide) track.scrollTo({ left: nextSlide.offsetLeft, behavior: "smooth" });
+    }, 5000);
+  }
+</script>

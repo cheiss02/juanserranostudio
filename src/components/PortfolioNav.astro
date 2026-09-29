@@ -1,0 +1,17 @@
+---
+import { getDictionary, categories, type CategorySlug, type Locale } from "../i18n/index";
+
+interface Props {
+  locale: Locale;
+  activeCategory?: CategorySlug;
+}
+
+const { locale, activeCategory } = Astro.props;
+const dict = getDictionary(locale);
+const prefix = locale === "es" ? "/es" : "";
+---
+
+<nav class="portfolio-browse" aria-label={dict.portfolio.title}>
+  <a href={`${prefix}/portfolio/`} aria-current={!activeCategory ? "page" : undefined}>{dict.common.allWork}</a>
+  {categories.map((category) => <a href={`${prefix}/portfolio/${category}/`} aria-current={activeCategory === category ? "page" : undefined}>{dict.categories[category].title}</a>)}
+</nav>

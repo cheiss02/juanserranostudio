@@ -1,0 +1,11 @@
+---
+import CategoryGallery from "../../../components/CategoryGallery.astro";
+import { categories, type CategorySlug } from "../../../i18n/index";
+
+export function getStaticPaths() {
+  return categories.map((category) => ({ params: { category } }));
+}
+
+const category = Astro.params.category as CategorySlug;
+---
+<CategoryGallery locale="en" category={category} />

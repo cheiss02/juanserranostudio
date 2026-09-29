@@ -1,0 +1,12 @@
+---
+import { getCollection } from "astro:content";
+import SeriesDetail from "../../../components/SeriesDetail.astro";
+
+export async function getStaticPaths() {
+  const series = await getCollection("series");
+  return series.map((entry) => ({ params: { category: entry.data.category, slug: entry.id }, props: { series: entry } }));
+}
+
+const { series } = Astro.props;
+---
+<SeriesDetail locale="en" series={series} />

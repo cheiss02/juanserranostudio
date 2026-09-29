@@ -1,0 +1,122 @@
+---
+import "../styles/global.css";
+import SiteHeader from "../components/SiteHeader.astro";
+import { getDictionary, categories as categorySlugs, type Locale } from "../i18n/index";
+import { site } from "../data/site";
+
+interface Props {
+  title: string;
+  description: string;
+  locale?: Locale;
+  alternatePath?: string;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  locale = "en",
+  alternatePath = "/es/",
+} = Astro.props;
+const dict = getDictionary(locale);
+const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/es" || Astro.url.pathname === "/es/";
+const homeHref = locale === "es" ? "/es/" : "/";
+const canonical = new URL(Astro.url.pathname, "https://juanserranostudio.com");
+const englishAlternate = locale === "en" ? canonical : new URL(alternatePath, "https://juanserranostudio.com");
+const spanishAlternate = locale === "es" ? canonical : new URL(alternatePath, "https://juanserranostudio.com");
+const businessSchema = {
+  "@context": "https://schema.org",
+  "@type": ["ProfessionalService", "LocalBusiness"],
+  name: site.name,
+  url: site.url,
+  description,
+  telephone: site.phone,
+  email: [site.generalEmail, site.supportEmail],
+  areaServed: { "@type": "AdministrativeArea", name: site.serviceArea },
+  sameAs: [site.instagramUrl, site.facebookUrl, ...site.otherSocialUrls].filter(Boolean),
+  knowsLanguage: ["English", "Spanish"],
+  contactPoint: [
+    { "@type": "ContactPoint", contactType: "booking inquiries", email: site.generalEmail, telephone: site.phone },
+    { "@type": "ContactPoint", contactType: "customer support", email: site.supportEmail },
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: dict.services.title,
+    itemListElement: categorySlugs.map((slug) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: dict.categories[slug].title,
+        description: dict.categories[slug].description,
+      },
+    })),
+  },
+  image: `${site.url}/share-image.jpg`,
+};
+const structuredData = [businessSchema, ...(Array.isArray(Astro.props.structuredData) ? Astro.props.structuredData : Astro.props.structuredData ? [Astro.props.structuredData] : [])];
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#fbfaf8" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={englishAlternate} />
+    <link rel="alternate" hreflang="es" href={spanishAlternate} />
+    <link rel="alternate" hreflang="x-default" href={englishAlternate} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${site.url}/share-image.jpg`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${site.url}/share-image.jpg`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  </head>
+  <body>
+    <span id="page-top-sentinel" class="page-top-sentinel" aria-hidden="true"></span>
+    <a class="skip-link" href="#main">{dict.common.skip}</a>
+    <SiteHeader locale={locale} overlay={Astro.url.pathname === "/"} />
+    <main id="main">
+      <slot />
+      {!isHome && <a class="back-to-home" href={homeHref}><span aria-hidden="true">←</span>{dict.common.backToHome}</a>}
+    </main>
+    <footer class="site-footer">
+      <a class="footer-brand" href={locale === "en" ? "/" : "/es/"}>Juan Serrano Studio</a>
+      <p>{dict.footer.serviceArea}</p>
+      <a href={`tel:${site.phone}`}>{site.phoneDisplay}</a>
+      <a href={`mailto:${site.generalEmail}`}>{site.generalEmail}</a>
+      <small>© {new Date().getFullYear()} Juan Serrano Studio. {dict.footer.copyright}</small>
+    </footer>
+    <a class="back-to-top" href="#page-top-sentinel" aria-label={dict.common.backToTop} data-back-to-top hidden>
+      <span aria-hidden="true">↑</span>
+    </a>
+    <script>
+      const backToTop = document.querySelector<HTMLAnchorElement>("[data-back-to-top]");
+
+      if (backToTop) {
+        const updateBackToTopVisibility = () => {
+          backToTop.hidden = window.scrollY < 120;
+        };
+
+        window.addEventListener("scroll", updateBackToTopVisibility, { passive: true });
+        updateBackToTopVisibility();
+      }
+    </script>
+  </body>
+</html>

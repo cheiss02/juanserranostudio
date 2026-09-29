@@ -1,0 +1,60 @@
+---
+import { getDictionary, type Locale } from "../i18n/index";
+import { site } from "../data/site";
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const dict = getDictionary(locale);
+const alternatePath = locale === "es" ? "/contact/" : "/es/contact/";
+const entityText = (value: string) => value.split("").map((character) => `&#${character.charCodeAt(0)};`).join("");
+const emailHref = (value: string) => `mailto:${value.replace("@", "%40")}`;
+---
+
+<SiteLayout title={`${dict.contact.title} | ${dict.meta.titleSuffix}`} description={dict.contact.description} locale={locale} alternatePath={alternatePath}>
+  <section class="page-intro contact-intro">
+    <p class="eyebrow">Juan Serrano Studio</p>
+    <h1>{dict.contact.title}</h1>
+    <p>{dict.contact.lead}</p>
+  </section>
+  <section class="contact-layout">
+    {site.formspreeEndpoint ? <form class="contact-form" method="POST" action={site.formspreeEndpoint}>
+      <input type="hidden" name="_subject" value="New studio inquiry" />
+      <input type="hidden" name="language" value={locale} />
+      <p class="honeypot"><label>{dict.contact.honeypot}<input name="_gotcha" tabindex="-1" autocomplete="off" /></label></p>
+      <h2>{dict.contact.formTitle}</h2>
+      <label for="contact-name">{dict.contact.name}</label>
+      <input id="contact-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="120" required />
+      <label for="contact-email">{dict.contact.email}</label>
+      <input id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required />
+      <label for="contact-service">{dict.contact.service}</label>
+      <select id="contact-service" name="service" required>
+        <option value="" selected disabled>{dict.contact.service}</option>
+        {dict.contact.serviceOptions.map((option) => <option value={option}>{option}</option>)}
+      </select>
+      <label for="contact-message">{dict.contact.message}</label>
+      <textarea id="contact-message" name="message" rows="6" minlength="20" maxlength="5000" required></textarea>
+      <p class="form-privacy">{dict.contact.privacy}</p>
+      <button class="button-link" type="submit">{dict.contact.send}</button>
+    </form> : <section class="contact-form contact-form-fallback">
+      <h2>{dict.contact.formTitle}</h2>
+      <p>{dict.contact.formUnavailable}</p>
+      <a class="button-link" href={emailHref(site.generalEmail)}>{dict.contact.emailCta}</a>
+    </section>}
+    <aside class="contact-details">
+      <section>
+        <h2>{dict.contact.directTitle}</h2>
+        <a class="contact-phone" href={`tel:${site.phone}`}>{site.phoneDisplay}</a>
+        <p><a href={emailHref(site.generalEmail)}><span set:html={entityText(site.generalEmail)} /></a></p>
+      </section>
+      <section>
+        <h2>{dict.contact.supportTitle}</h2>
+        <a href={emailHref(site.supportEmail)}><span set:html={entityText(site.supportEmail)} /></a>
+      </section>
+      <section>
+        <h2>{dict.contact.areaTitle}</h2>
+        <p>{dict.contact.area}</p>
+      </section>
+    </aside>
+  </section>
+</SiteLayout>
