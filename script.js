@@ -261,11 +261,20 @@ cards.forEach(function(c){
   var div = document.createElement("div");
   div.className = "card" + (c.tall ? " tall" : "");
   div.setAttribute("data-idx", c.idx);
+  div.setAttribute("tabindex", "0");
+  div.setAttribute("role", "button");
+  div.setAttribute("aria-label", pt(c.photo).title);
   var figure = document.createElement("figure");
   var img = document.createElement("img");
   img.alt = pt(c.photo).title;
   figure.appendChild(img);
   div.appendChild(figure);
+  div.addEventListener("keydown", function(e){
+    if (e.key === "Enter" || e.key === " " || e.key === "Spacebar"){
+      e.preventDefault();
+      openLightbox(div, c.idx);
+    }
+  });
   orb.appendChild(div);
   c.el = div; c.img = img;
 });
@@ -275,6 +284,9 @@ var gridFigs = [];
 photos.forEach(function(p, i){
   var fig = document.createElement("figure");
   fig.setAttribute("data-idx", i);
+  fig.setAttribute("tabindex", "0");
+  fig.setAttribute("role", "button");
+  fig.setAttribute("aria-label", pt(p).title);
   var img = document.createElement("img");
   img.alt = pt(p).title;
   var cap = document.createElement("figcaption");
@@ -282,6 +294,12 @@ photos.forEach(function(p, i){
   fig.appendChild(img);
   fig.appendChild(cap);
   fig.addEventListener("click", function(){ openLightbox(fig, i); });
+  fig.addEventListener("keydown", function(e){
+    if (e.key === "Enter" || e.key === " " || e.key === "Spacebar"){
+      e.preventDefault();
+      openLightbox(fig, i);
+    }
+  });
   gridRows.appendChild(fig);
   gridFigs.push({el:fig, img:img, cap:cap});
 });
@@ -523,11 +541,16 @@ function applyLang(lang){
     btn.setAttribute("aria-pressed", btn.getAttribute("data-lang") === lang ? "true" : "false");
   });
 
-  cards.forEach(function(c){ c.img.alt = pt(c.photo).title; });
+  cards.forEach(function(c){
+    var tt = pt(c.photo).title;
+    c.img.alt = tt;
+    c.el.setAttribute("aria-label", tt);
+  });
   gridFigs.forEach(function(g, i){
     var tt = pt(photos[i]).title;
     g.img.alt = tt;
     g.cap.textContent = tt;
+    g.el.setAttribute("aria-label", tt);
   });
 
   if (document.body.classList.contains("lit") && focused>=0){
@@ -560,9 +583,12 @@ function closeMenu(){
 }
 menuBtn.addEventListener("click", function(){ menuOpen ? closeMenu() : openMenu(); });
 var menuGridLink = menu.querySelector("[data-grid]");
-var menuCloseLink = menu.querySelector("[data-close-menu]");
-menuGridLink.addEventListener("click", function(e){ e.preventDefault(); closeMenu(); toggleGrid(true); });
-menuCloseLink.addEventListener("click", function(e){ e.preventDefault(); closeMenu(); });
+if (menuGridLink){
+  menuGridLink.addEventListener("click", function(e){ e.preventDefault(); closeMenu(); toggleGrid(true); });
+}
+menu.querySelectorAll("[data-close-menu]").forEach(function(a){
+  a.addEventListener("click", function(e){ e.preventDefault(); closeMenu(); });
+});
 menu.querySelectorAll('a[href^="mailto:"]').forEach(function(a){
   a.addEventListener("click", function(){ closeMenu(); });
 });
@@ -659,10 +685,24 @@ window.addEventListener("keydown", function(e){
 });
 
 /* ---------- intro film ---------- */
-var introRevealed = false;
+var skipIntro = false;
+try{ skipIntro = sessionStorage.getItem("ss_intro_seen") === "1"; }catch(e){}
+if (skipIntro){
+  if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
+  if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
+  if (film){
+    try{ film.pause(); film.removeAttribute("src"); film.load(); }catch(e){}
+  }
+  document.body.classList.remove("locked");
+  document.body.classList.add("revealed");
+  document.documentElement.style.overflow = "";
+}
+
+var introRevealed = skipIntro;
 function reveal(){
   if (introRevealed) return;
   introRevealed = true;
+  try{ sessionStorage.setItem("ss_intro_seen", "1"); }catch(e){}
   intro.classList.add("closing");
   document.body.classList.remove("locked");
   document.documentElement.style.overflow = "";
@@ -680,7 +720,9 @@ function reveal(){
   });
 }
 
-if (film){
+if (skipIntro){
+  /* already removed above; nothing further to wire up */
+} else if (film){
   film.muted = true;
   film.defaultMuted = true;
   film.playsInline = true;
@@ -754,5 +796,7 @@ function dotLoop(){
 requestAnimationFrame(dotLoop);
 
 applyLang(currentLang);
+
+if (location.hash === "#portfolio") toggleGrid(true);
 
 })();
