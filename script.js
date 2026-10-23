@@ -142,7 +142,7 @@ if (wordmarkLogo){
 var splashLogo = document.querySelector("#splash .logo");
 if (splashLogo){
   splashLogo.addEventListener("error", function(){
-    if (splashLogo.parentNode) splashLogo.parentNode.removeChild(splashLogo);
+    splash.classList.add("logo-broken");
   }, {once:true});
 }
 
@@ -685,24 +685,10 @@ window.addEventListener("keydown", function(e){
 });
 
 /* ---------- intro film ---------- */
-var skipIntro = false;
-try{ skipIntro = sessionStorage.getItem("ss_intro_seen") === "1"; }catch(e){}
-if (skipIntro){
-  if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
-  if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
-  if (film){
-    try{ film.pause(); film.removeAttribute("src"); film.load(); }catch(e){}
-  }
-  document.body.classList.remove("locked");
-  document.body.classList.add("revealed");
-  document.documentElement.style.overflow = "";
-}
-
-var introRevealed = skipIntro;
+var introRevealed = false;
 function reveal(){
   if (introRevealed) return;
   introRevealed = true;
-  try{ sessionStorage.setItem("ss_intro_seen", "1"); }catch(e){}
   intro.classList.add("closing");
   document.body.classList.remove("locked");
   document.documentElement.style.overflow = "";
@@ -720,9 +706,7 @@ function reveal(){
   });
 }
 
-if (skipIntro){
-  /* already removed above; nothing further to wire up */
-} else if (film){
+if (film){
   film.muted = true;
   film.defaultMuted = true;
   film.playsInline = true;

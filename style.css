@@ -359,10 +359,13 @@ body.lit #lit{opacity:1; pointer-events:auto;}
 }
 #splash.out{opacity:0; pointer-events:none;}
 #splash .logo{width:clamp(150px, 22vw, 260px); height:auto; opacity:0; animation:riseIn 1.25s ease .05s forwards;}
+#splash.logo-broken .logo{display:none;}
 #splash .mark{
+  display:none;
   font-family:var(--serif); font-size:clamp(28px, 4.4vw, 52px); letter-spacing:.005em; color:var(--ink);
   opacity:0; animation:riseIn 1.25s ease .15s forwards;
 }
+#splash.logo-broken .mark{display:block;}
 #splash .bar{width:clamp(120px, 17vw, 210px); height:1px; background:rgba(244,242,239,.16); position:relative; overflow:hidden;}
 #splash .bar s{display:block; width:100%; height:100%; background:var(--gold); transform:scaleX(0); transform-origin:left; transition:transform .55s ease; text-decoration:none;}
 #splash .tag{font-size:10px; letter-spacing:.26em; text-transform:uppercase; color:rgba(244,242,239,.38); opacity:0; animation:riseIn .9s ease .7s forwards;}
