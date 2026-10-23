@@ -706,7 +706,20 @@ function reveal(){
   });
 }
 
-if (film){
+var deepLinkGrid = location.hash === "#portfolio";
+
+if (deepLinkGrid){
+  if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
+  if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
+  if (film){
+    try{ film.pause(); film.removeAttribute("src"); film.load(); }catch(e){}
+  }
+  introRevealed = true;
+  document.body.classList.remove("locked");
+  document.documentElement.style.overflow = "";
+  layoutSphere(true);
+  document.body.classList.add("revealed");
+} else if (film){
   film.muted = true;
   film.defaultMuted = true;
   film.playsInline = true;
@@ -781,6 +794,6 @@ requestAnimationFrame(dotLoop);
 
 applyLang(currentLang);
 
-if (location.hash === "#portfolio") toggleGrid(true);
+if (deepLinkGrid) toggleGrid(true);
 
 })();

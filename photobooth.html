@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Photo Booth — Juan Serrano | Serrano Studio Photography</title>
+<meta name="description" content="Photo booth coverage by Juan Serrano of Serrano Studio Photography, serving Southern California.">
+<link rel="icon" href="assets/logo-white.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="content revealed">
+
+<header class="site-header">
+  <a class="wordmark" href="index.html" aria-label="Juan Serrano — Serrano Studio Photography">
+    <img src="assets/logo-mono.png" alt="">
+    <span class="wordmark-fallback">Juan<em>Serrano</em></span>
+  </a>
+  <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+    <span class="menu-label" data-i18n="menuLabel">Menu</span>
+    <span class="bars"><i></i><i></i></span>
+  </button>
+</header>
+
+<div id="menu">
+  <nav>
+    <a href="portfolio.html" data-i18n="navPortfolio">Portfolio</a>
+    <a href="services.html" data-i18n="navServices">Services</a>
+    <a href="about.html" data-i18n="navAbout">About</a>
+    <a href="contact.html" data-i18n="navContact">Contact</a>
+    <span class="navsep" aria-hidden="true"></span>
+    <span class="langswitch" role="group" aria-label="Language">
+      <button type="button" class="langbtn" data-lang="en" aria-pressed="true">EN</button>
+      <span class="langdiv" aria-hidden="true">/</span>
+      <button type="button" class="langbtn" data-lang="es" aria-pressed="false">ES</button>
+    </span>
+  </nav>
+  <div class="addr">
+    <span data-i18n="addrLine">Serving Southern California</span><br>
+    <a href="mailto:info@juanserranostudio.com">info@juanserranostudio.com</a>
+  </div>
+</div>
+
+<main class="gallery-page">
+  <div class="gallery-head">
+    <a class="back-home" href="index.html" data-i18n="backHome">Home</a>
+    <div class="eyebrow" data-i18n="eyebrow">Portfolio · Photo Booth</div>
+    <h1 data-i18n="h1" style="font-family:var(--serif); font-weight:400; font-size:clamp(36px,6vw,64px); margin:0 0 16px;">Photo Booth</h1>
+    <p class="lead" data-i18n="lead" style="font-family:var(--serif); font-style:italic; font-size:clamp(16px,2vw,20px); color:rgba(244,242,239,.86); max-width:560px; margin:0;">A simple, fun add-on for quinceañeras, weddings, and parties.</p>
+  </div>
+
+  <div class="gallery-rows">
+    <a href="assets/services/photobooth.jpg" target="_blank" rel="noopener">
+      <figure><img src="assets/services/photobooth.jpg" alt="Photo booth props example"></figure>
+    </a>
+  </div>
+
+  <p class="gallery-note" data-i18n="note">Example photo shown; event photos from this category are on the way.</p>
+
+  <div class="cta-row" style="justify-content:center; margin-top:28px;">
+    <a class="cta-btn" href="contact.html#quote" data-i18n="ctaQuote">Request a Quote</a>
+  </div>
+</main>
+
+<div id="dot"></div>
+
+<script src="nav.js"></script>
+<script>
+initSiteChrome({
+  en:{
+    title:"Photo Booth — Juan Serrano | Serrano Studio Photography",
+    metaDesc:"Photo booth coverage by Juan Serrano of Serrano Studio Photography, serving Southern California.",
+    menuLabel:"Menu",
+    navPortfolio:"Portfolio", navServices:"Services", navAbout:"About", navContact:"Contact",
+    addrLine:"Serving Southern California",
+    ariaOpenMenu:"Open menu", ariaCloseMenu:"Close menu",
+    ariaWordmark:"Juan Serrano — Serrano Studio Photography",
+    backHome:"Home",
+    eyebrow:"Portfolio · Photo Booth", h1:"Photo Booth",
+    lead:"A simple, fun add-on for quinceañeras, weddings, and parties.",
+    note:"Example photo shown; event photos from this category are on the way.",
+    ctaQuote:"Request a Quote"
+  },
+  es:{
+    title:"Cabina de Fotos — Juan Serrano | Serrano Studio Photography",
+    metaDesc:"Cobertura de cabina de fotos por Juan Serrano, de Serrano Studio Photography, sirviendo al Sur de California.",
+    menuLabel:"Menú",
+    navPortfolio:"Portafolio", navServices:"Servicios", navAbout:"Acerca de", navContact:"Contacto",
+    addrLine:"Sirviendo al Sur de California",
+    ariaOpenMenu:"Abrir menú", ariaCloseMenu:"Cerrar menú",
+    ariaWordmark:"Juan Serrano — Fotografía de Serrano Studio",
+    backHome:"Inicio",
+    eyebrow:"Portafolio · Cabina de Fotos", h1:"Cabina de Fotos",
+    lead:"Un complemento simple y divertido para quinceañeras, bodas y fiestas.",
+    note:"Se muestra una foto de ejemplo; las fotos reales de esta categoría llegarán pronto.",
+    ctaQuote:"Solicitar Cotización"
+  }
+});
+</script>
+</body>
+</html>
