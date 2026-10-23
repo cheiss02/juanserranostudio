@@ -458,6 +458,15 @@ body.menuopen .site-header{z-index:90; mix-blend-mode:normal;}
   position:relative; z-index:5; max-width:860px; margin:0 auto;
   padding:calc(var(--pad) * 7 + var(--safe-top)) calc(var(--pad) + var(--safe-right)) calc(var(--pad) * 6 + var(--safe-bottom)) calc(var(--pad) + var(--safe-left));
 }
+.back-home{
+  display:inline-flex; align-items:center; gap:7px;
+  font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  color:rgba(244,242,239,.5); text-decoration:none; margin-bottom:30px;
+  transition:color .3s ease, gap .3s ease;
+}
+.back-home::before{content:'←'; font-size:13px; line-height:1;}
+.back-home:hover{color:var(--ink); gap:10px;}
+
 .content-page .eyebrow{font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:rgba(244,242,239,.42); margin:0 0 18px;}
 .content-page h1{font-family:var(--serif); font-weight:400; font-size:clamp(40px, 7vw, 76px); line-height:1.04; letter-spacing:-.01em; margin:0 0 22px;}
 .content-page .lead{font-family:var(--serif); font-style:italic; font-size:clamp(18px, 2.2vw, 24px); line-height:1.5; color:rgba(244,242,239,.86); max-width:620px; margin:0 0 48px;}
