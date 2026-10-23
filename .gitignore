@@ -1,26 +1,4 @@
-# dependencies
-/node_modules/
-
-# Astro generated files
-/.astro/
-/dist/
-
-# Legacy build output
-/.next/
-/out/
-/build/
-
-# Environment files (Formspree endpoint is configured in GitHub Actions)
-.env
-.env.*
-!.env.example
-
-# Tooling
-*.tsbuildinfo
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
 .DS_Store
 Thumbs.db
 *.pem
+node_modules

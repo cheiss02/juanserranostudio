@@ -1,7 +1,7 @@
 # Repository Notes
 
-- This is a static Astro site. Read the relevant Astro component, content collection, or image documentation before changing framework behavior.
-- Portfolio entries live in `src/content/series/<slug>/index.md` with their local images.
-- English and Spanish interface copy lives in `src/i18n/en.json` and `src/i18n/es.json`; keep both dictionaries structurally aligned.
-- Run `npm run check` before publishing. It runs Astro diagnostics and creates the static site in `dist/`.
-- Do not add server-only secrets to client code. GitHub Pages serves static files only.
+- This is a single self-contained static page: `index.html` at the repo root. No framework, no bundler, no build step. All CSS lives in the one `<style>` block in `<head>`; all JS lives in the one `<script>` at the end of `<body>`.
+- Media lives in `assets/`: `assets/intro.mp4`, `assets/avatar.jpg`, `assets/logo-white.png`, and `assets/photos/01.jpg`–`21.jpg`. Reference these exact relative paths; do not add a bundler, framework, or external CSS/JS file.
+- GitHub Pages serves `index.html` and `assets/` directly from the repo root (via `.github/workflows/deploy.yml`) — there is nothing to build or run locally. Open `index.html` in a browser (or serve the folder with any static file server) to preview changes.
+- `CNAME` at the repo root configures the `juanserranostudio.com` custom domain for GitHub Pages; keep it unless the domain changes.
+- Do not add server-only secrets to client code — this is a static page with no backend.
