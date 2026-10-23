@@ -316,7 +316,7 @@ photos.forEach(function(p, i){
     splashReport();
   });
 });
-decodeAvatar("assets/avatar.jpg", 160).then(function(src){
+decodeAvatar("assets/avatar.jpeg", 160).then(function(src){
   avatarImg.src = src;
 });
 

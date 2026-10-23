@@ -483,6 +483,39 @@ body.menuopen .site-header{z-index:90; mix-blend-mode:normal;}
 .content-page .cards .card-item ul{margin:0; padding-left:16px; font-size:12.5px; line-height:1.75; color:rgba(244,242,239,.58);}
 .content-page .cards .card-item .price{font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:rgba(244,242,239,.5); margin-top:10px;}
 
+/* ---------- services: one full-width row per service ---------- */
+.service-rows{margin:44px 0;}
+.service-row{
+  display:grid; grid-template-columns:minmax(200px,300px) minmax(0,1fr) auto;
+  align-items:start; gap:clamp(24px,3.6vw,48px);
+  padding:clamp(30px,4.4vw,48px) 0;
+  border-top:1px solid var(--line);
+}
+.service-rows .service-row:last-child{border-bottom:1px solid var(--line);}
+.service-row.no-photo{grid-template-columns:minmax(0,1fr) auto;}
+.service-media .service-num{font-size:11px; letter-spacing:.16em; color:rgba(244,242,239,.42); margin-bottom:10px;}
+.service-photo{position:relative; aspect-ratio:4/5; border-radius:3px; overflow:hidden; background:#0b0b0b;}
+.service-photo img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.88; transition:transform .8s ease, opacity .8s ease;}
+.service-row:hover .service-photo img{transform:scale(1.04); opacity:1;}
+
+.service-info h3{font-family:var(--serif); font-weight:400; font-size:clamp(28px,3.2vw,42px); margin:0 0 10px;}
+.service-info .subtitle{font-size:15.5px; font-weight:500; color:var(--ink); margin:0 0 14px;}
+.service-info .desc{font-size:14px; line-height:1.7; color:rgba(244,242,239,.68); margin:0 0 22px; max-width:520px;}
+.service-info .included-label{font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:rgba(244,242,239,.42); margin:0 0 10px;}
+.service-info .included-list{list-style:none; margin:0; padding:0; display:grid; gap:7px;}
+.service-info .included-list li{font-size:13.5px; line-height:1.6; color:rgba(244,242,239,.66); padding-left:18px; position:relative;}
+.service-info .included-list li::before{content:'—'; position:absolute; left:0; color:rgba(244,242,239,.38);}
+
+.service-cta{display:flex; flex-direction:column; align-items:flex-end; gap:14px; text-align:right; white-space:nowrap;}
+.service-cta .price{font-size:13px; color:rgba(244,242,239,.6);}
+.service-cta .cta-btn{white-space:nowrap;}
+
+@media (max-width:900px){
+  .service-row, .service-row.no-photo{grid-template-columns:1fr; gap:20px;}
+  .service-photo{aspect-ratio:3/2; max-width:360px;}
+  .service-cta{align-items:flex-start; text-align:left; flex-direction:row; align-items:center;}
+}
+
 .cta-row{display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-top:10px;}
 .cta-btn{
   display:inline-flex; align-items:center; justify-content:center; gap:8px;
