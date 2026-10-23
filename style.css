@@ -181,7 +181,7 @@ body.menuopen .bars i:last-child{transform:rotate(-45deg);}
   transition:opacity .4s ease, transform .4s ease;
 }
 .bio .who{display:flex; align-items:center; gap:14px; margin-bottom:14px;}
-.bio img#avatar{width:52px; height:52px; border-radius:3px; object-fit:cover; object-position:50% 20%; filter:grayscale(.15);}
+.bio img#avatar{width:52px; height:52px; display:block; background:#000; border-radius:3px; object-fit:cover; object-position:50% 20%; filter:grayscale(.15);}
 .bio b{font-family:var(--serif); font-weight:400; font-size:19px; letter-spacing:.01em;}
 .bio p{font-size:12.5px; line-height:1.62; color:rgba(244,242,239,.72); margin:0;}
 body.deep .bio, body.gridview .bio, body.lit .bio{opacity:0; transform:translateY(10px); pointer-events:none;}
