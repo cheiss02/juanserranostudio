@@ -131,6 +131,7 @@
         <div>
           <button type="submit" class="cta-btn" id="qSubmit" data-i18n="submitBtn">Send Quote Request</button>
           <p class="form-note" id="qStatus" role="status" aria-live="polite" data-i18n="formNote">Goes straight to the studio’s inbox — we’ll reply by email.</p>
+          <p class="form-note form-legal" data-i18n-html="consent">By sending, you agree to our <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms of Service</a>.</p>
         </div>
       </form>
     </div>
@@ -195,7 +196,8 @@ var chrome_UI = {
     formNote:"Goes straight to the studio’s inbox — we’ll reply by email.",
     sending:"Sending…",
     sent:"Thank you! Your request was sent — Juan will reply by email soon.",
-    sendFail:"Couldn’t send from the page — opening your email app instead."
+    sendFail:"Sorry — that didn’t go through. Please try again, or call/WhatsApp (213) 904-3004.",
+    consent:"By sending, you agree to our <a href=\"privacy.html\">Privacy Policy</a> and <a href=\"terms.html\">Terms of Service</a>."
   },
   es:{
     title:"Reserva un Fotógrafo en el Sur de California | Serrano Studio Photography",
@@ -220,7 +222,8 @@ var chrome_UI = {
     formNote:"Llega directo al correo del estudio — te responderemos por email.",
     sending:"Enviando…",
     sent:"¡Gracias! Tu solicitud fue enviada — Juan te responderá por correo pronto.",
-    sendFail:"No se pudo enviar desde la página — abriendo tu aplicación de correo."
+    sendFail:"Lo sentimos — no se pudo enviar. Inténtalo de nuevo, o llama/escribe por WhatsApp al (213) 904-3004.",
+    consent:"Al enviar, aceptas nuestra <a href=\"privacy.html\">Política de Privacidad</a> y los <a href=\"terms.html\">Términos de Servicio</a>."
   }
 };
 var chrome_ = initSiteChrome(chrome_UI);
@@ -228,8 +231,8 @@ var chrome_ = initSiteChrome(chrome_UI);
 /* Quote form → FormSubmit.co (free form-to-email relay, no backend
    needed). Submissions arrive at info@juanserranostudio.com. The very
    first submission triggers a one-time activation email to that inbox —
-   click "Activate" in it or nothing is delivered. If the request fails
-   for any reason, fall back to opening the visitor's email app. */
+   click "Activate" in it or nothing is delivered. Sending happens in the
+   background; the visitor's email app is never opened. */
 var FORM_ENDPOINT = "https://formsubmit.co/ajax/info@juanserranostudio.com";
 var quoteForm = document.getElementById("quoteForm");
 var qSubmit = document.getElementById("qSubmit");
@@ -249,12 +252,6 @@ quoteForm.addEventListener("submit", function(e){
     _template: "table",
     _captcha: "false"
   };
-  function mailtoFallback(){
-    var lines = ["Name: " + data.name, "Email: " + data.email, "Phone: " + data.phone,
-      "Service: " + service, "Event date: " + data.event_date, "Location: " + data.location, "", data.message];
-    window.location.href = "mailto:info@juanserranostudio.com?subject=" +
-      encodeURIComponent(data._subject) + "&body=" + encodeURIComponent(lines.join("\n"));
-  }
   qSubmit.disabled = true;
   qStatus.removeAttribute("data-i18n");
   qStatus.textContent = L().sending;
@@ -270,8 +267,8 @@ quoteForm.addEventListener("submit", function(e){
       qStatus.textContent = L().sent;
     })
     .catch(function(){
+      /* Keep what they typed so they can retry — never bounce them to an email app. */
       qStatus.textContent = L().sendFail;
-      setTimeout(mailtoFallback, 900);
     })
     .then(function(){ qSubmit.disabled = false; });
 });
