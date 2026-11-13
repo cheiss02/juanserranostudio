@@ -550,10 +550,14 @@ body.content{overflow-x:hidden; overflow-y:auto; height:auto; min-height:100vh; 
 .about-layout .about-portrait{position:sticky; top:120px;}
 .about-layout .about-portrait img{width:100%; margin-bottom:0;}
 .about-layout .about-subhead{margin-top:0;}
+/* Phones: photo floats left, the story starts beside it and wraps below */
 @media (max-width:768px){
-  .about-layout{grid-template-columns:1fr; gap:26px;}
-  .about-layout .about-portrait{position:static;}
-  .about-layout .about-portrait img{width:min(280px, 72vw);}
+  .about-layout{display:block;}
+  .about-layout::after{content:''; display:block; clear:both;}
+  .about-layout .about-portrait{position:static; float:left; width:min(44%, 220px); margin:4px 18px 12px 0;}
+  .about-layout .about-portrait img{width:100%;}
+  .about-layout .about-text{display:contents;}
+  .about-layout .body-copy p{max-width:none;}
 }
 
 .back-home{
