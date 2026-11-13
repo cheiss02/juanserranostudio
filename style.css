@@ -207,6 +207,17 @@ body.deep .bio, body.gridview .bio, body.lit .bio{opacity:0; transform:translate
   transition:opacity .4s ease;
 }
 body.gridview .colophon, body.lit .colophon{opacity:0; pointer-events:none;}
+.colophon{display:flex; align-items:center; gap:18px;}
+.legal-links{display:inline-flex; gap:14px;}
+.legal-links a{color:rgba(244,242,239,.5); text-decoration:none; font-size:11.5px; position:relative;}
+.legal-links a::after{content:''; position:absolute; inset:-12px -6px;} /* comfortable tap target */
+.legal-links a:hover{color:var(--ink);}
+.colophon .legal-links{padding-left:18px; border-left:1px solid rgba(244,242,239,.2);}
+.bio-legal{display:none !important;}
+@media (max-width:768px){ .bio-legal{display:flex !important; margin-top:10px !important;} }
+/* contact form consent line */
+.form-legal{margin-top:6px; font-size:11.5px; color:rgba(244,242,239,.5);}
+.form-legal a{color:rgba(244,242,239,.75); text-decoration:underline; text-underline-offset:2px;}
 
 /* ---------- grid toggle ---------- */
 .gridbtn{
