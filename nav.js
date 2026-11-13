@@ -1,6 +1,27 @@
 (function(){
 "use strict";
 
+/* Labels shared by every secondary page (nav + footer); a page's own
+   UI object overrides any of these. */
+var SHARED = {
+  en:{
+    navPortfolio:"Portfolio", navServices:"Services", navAbout:"About", navContact:"Contact",
+    privacyLink:"Privacy", termsLink:"Terms",
+    footCtaLine:"Let’s capture your day.", footCtaBtn:"Request a Quote",
+    footTagline:"Quinceañera, wedding, portrait and sports photography in Southern California.",
+    footExplore:"Explore", footContact:"Contact", footFollow:"Follow",
+    footRights:"All rights reserved."
+  },
+  es:{
+    navPortfolio:"Portafolio", navServices:"Servicios", navAbout:"Acerca de", navContact:"Contacto",
+    privacyLink:"Privacidad", termsLink:"Términos",
+    footCtaLine:"Capturemos tu día.", footCtaBtn:"Solicitar Cotización",
+    footTagline:"Fotografía de quinceañeras, bodas, retratos y deportes en el Sur de California.",
+    footExplore:"Explorar", footContact:"Contacto", footFollow:"Síguenos",
+    footRights:"Todos los derechos reservados."
+  }
+};
+
 function initSiteChrome(UI){
   var menu = document.getElementById("menu");
   var menuBtn = document.getElementById("menuBtn");
@@ -47,7 +68,7 @@ function initSiteChrome(UI){
     if (!UI[lang]) lang = "en";
     currentLang = lang;
     try{ localStorage.setItem("ss_lang", lang); }catch(e){}
-    var t = UI[lang];
+    var t = Object.assign({}, SHARED[lang], UI[lang]);
 
     document.documentElement.lang = lang;
     if (t.title) document.title = t.title;

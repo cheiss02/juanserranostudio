@@ -276,7 +276,11 @@ body.gridview #stage{opacity:0; filter:blur(14px); pointer-events:none;}
   transition:opacity .5s;
 }
 body.lit #lit{opacity:1; pointer-events:auto;}
-#lit .scrim{position:absolute; inset:0; background:transparent; cursor:pointer;}
+/* Solid backdrop: without it the sphere headline showed through the
+   lightbox text (unreadable on phones, where they overlap). */
+#lit .scrim{position:absolute; inset:0; background:rgba(0,0,0,.9); cursor:pointer;}
+#stage{transition:opacity .4s ease, filter .4s ease;}
+body.lit #stage{opacity:.08;}
 .plate{
   position:relative;
   width:min(72vw, 860px, calc((100vh - 230px) * 1.5));
