@@ -63,7 +63,7 @@ a{-webkit-tap-highlight-color:transparent;}
    shows — on phones the scroll-to-zoom step that normally reveals it is gone. */
 @media (pointer:coarse){
   #stage{touch-action:none;}
-  body.touched .bio, body.touched .colophon, body.touched .cue{opacity:0; transform:translateY(10px); pointer-events:none;}
+  body.revealed.touched .bio, body.revealed.touched .colophon, body.revealed.touched .cue{opacity:0; transform:translateY(10px); pointer-events:none;}
   body.revealed.touched .gridbtn{opacity:1; transform:none; pointer-events:auto;}
 }
 
