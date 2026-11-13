@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/logo-white.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="content revealed">
@@ -18,14 +18,7 @@
     <img src="assets/logo-mono.png" alt="">
     <span class="wordmark-fallback">Juan<em>Serrano</em></span>
   </a>
-  <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
-    <span class="menu-label" data-i18n="menuLabel">Menu</span>
-    <span class="bars"><i></i><i></i></span>
-  </button>
-</header>
-
-<div id="menu">
-  <nav>
+  <nav class="site-nav">
     <a href="portfolio.html" data-i18n="navPortfolio">Portfolio</a>
     <a href="services.html" data-i18n="navServices">Services</a>
     <a href="about.html" data-i18n="navAbout">About</a>
@@ -37,11 +30,7 @@
       <button type="button" class="langbtn" data-lang="es" aria-pressed="false">ES</button>
     </span>
   </nav>
-  <div class="addr">
-    <span data-i18n="addrLine">Serving Southern California</span><br>
-    <a href="mailto:info@juanserranostudio.com">info@juanserranostudio.com</a>
-  </div>
-</div>
+</header>
 
 <main class="gallery-page">
   <div class="gallery-head">
@@ -51,18 +40,29 @@
     <p class="lead" data-i18n="lead" style="font-family:var(--serif); font-style:italic; font-size:clamp(16px,2vw,20px); color:rgba(244,242,239,.86); max-width:560px; margin:0;">A calm, observant record of the day, from getting ready through the reception.</p>
   </div>
 
-  <div class="gallery-rows">
-    <a href="assets/wedding/01.jpg" target="_blank" rel="noopener">
-      <figure><img src="assets/wedding/01.jpg" alt="Wedding couple portrait"></figure>
-    </a>
-  </div>
-
-  <p class="gallery-note" data-i18n="note">More photographs from this category are on the way.</p>
+  <div class="gallery-rows"></div>
 
   <div class="cta-row" style="justify-content:center; margin-top:28px;">
     <a class="cta-btn" href="contact.html#quote" data-i18n="ctaQuote">Request a Quote</a>
   </div>
 </main>
+
+<div id="lit">
+  <div class="scrim" data-close></div>
+  <div class="plate">
+    <div class="shot">
+      <img id="litImg" alt="">
+      <button class="close" data-close data-i18n="litClose">Close</button>
+    </div>
+    <div class="meta">
+      <div>
+        <h2 id="litTitle"></h2>
+        <div class="where" id="litWhere"></div>
+      </div>
+      <p class="note" id="litNote"></p>
+    </div>
+  </div>
+</div>
 
 <div id="dot"></div>
 
@@ -80,7 +80,7 @@ initSiteChrome({
     backHome:"Home",
     eyebrow:"Portfolio · Wedding", h1:"Wedding",
     lead:"A calm, observant record of the day, from getting ready through the reception.",
-    note:"More photographs from this category are on the way.",
+    litClose:"Close",
     ctaQuote:"Request a Quote"
   },
   es:{
@@ -94,9 +94,19 @@ initSiteChrome({
     backHome:"Inicio",
     eyebrow:"Portafolio · Boda", h1:"Boda",
     lead:"Un registro tranquilo y observador del día, desde los preparativos hasta la recepción.",
-    note:"Más fotografías de esta categoría llegarán pronto.",
+    litClose:"Cerrar",
     ctaQuote:"Solicitar Cotización"
   }
+});
+
+initGallery({
+  folder: "assets/wedding",
+  photos: [
+    {id:"01", en:{title:"Down the Walkway", where:"Southern California", note:"Hand in hand after the ceremony, the city skyline standing in for a backdrop."}, es:{title:"Por el Camino", where:"Sur de California", note:"Tomados de la mano después de la ceremonia, con el horizonte de la ciudad de fondo."}},
+    {id:"02", en:{title:"Getting Ready", where:"Southern California", note:"A quiet moment before the dress goes on — the calm before the day begins in earnest."}, es:{title:"Preparativos", where:"Sur de California", note:"Un momento tranquilo antes de ponerse el vestido — la calma antes de que el día realmente comience."}},
+    {id:"03", en:{title:"The Rings", where:"Southern California", note:"Two rings resting in the bouquet, waiting for their moment at the altar."}, es:{title:"Los Anillos", where:"Sur de California", note:"Dos anillos descansando en el ramo, esperando su momento en el altar."}},
+    {id:"04", en:{title:"Bouquet Toss", where:"Southern California", note:"Arms up, hopes up — the reception's one unscripted scramble."}, es:{title:"El Ramo", where:"Sur de California", note:"Brazos en alto, ilusiones en alto — el único momento sin guion de la recepción."}}
+  ]
 });
 </script>
 </body>

@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/logo-white.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="content revealed">
@@ -18,14 +18,7 @@
     <img src="assets/logo-mono.png" alt="">
     <span class="wordmark-fallback">Juan<em>Serrano</em></span>
   </a>
-  <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
-    <span class="menu-label" data-i18n="menuLabel">Menu</span>
-    <span class="bars"><i></i><i></i></span>
-  </button>
-</header>
-
-<div id="menu">
-  <nav>
+  <nav class="site-nav">
     <a href="portfolio.html" data-i18n="navPortfolio">Portfolio</a>
     <a href="services.html" data-i18n="navServices">Services</a>
     <a href="about.html" data-i18n="navAbout">About</a>
@@ -37,11 +30,7 @@
       <button type="button" class="langbtn" data-lang="es" aria-pressed="false">ES</button>
     </span>
   </nav>
-  <div class="addr">
-    <span data-i18n="addrLine">Serving Southern California</span><br>
-    <a href="mailto:info@juanserranostudio.com">info@juanserranostudio.com</a>
-  </div>
-</div>
+</header>
 
 <main class="content-page">
   <a class="back-home" href="index.html" data-i18n="backHome">Home</a>

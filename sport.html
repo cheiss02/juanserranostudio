@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/logo-white.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="content revealed">
@@ -18,14 +18,7 @@
     <img src="assets/logo-mono.png" alt="">
     <span class="wordmark-fallback">Juan<em>Serrano</em></span>
   </a>
-  <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
-    <span class="menu-label" data-i18n="menuLabel">Menu</span>
-    <span class="bars"><i></i><i></i></span>
-  </button>
-</header>
-
-<div id="menu">
-  <nav>
+  <nav class="site-nav">
     <a href="portfolio.html" data-i18n="navPortfolio">Portfolio</a>
     <a href="services.html" data-i18n="navServices">Services</a>
     <a href="about.html" data-i18n="navAbout">About</a>
@@ -37,11 +30,7 @@
       <button type="button" class="langbtn" data-lang="es" aria-pressed="false">ES</button>
     </span>
   </nav>
-  <div class="addr">
-    <span data-i18n="addrLine">Serving Southern California</span><br>
-    <a href="mailto:info@juanserranostudio.com">info@juanserranostudio.com</a>
-  </div>
-</div>
+</header>
 
 <main class="gallery-page">
   <div class="gallery-head">
@@ -51,37 +40,29 @@
     <p class="lead" data-i18n="lead" style="font-family:var(--serif); font-style:italic; font-size:clamp(16px,2vw,20px); color:rgba(244,242,239,.86); max-width:560px; margin:0;">From the first serve to the final buzzer — the split seconds that make every game worth remembering.</p>
   </div>
 
-  <div class="gallery-rows">
-    <a href="assets/photos/01.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/01.jpg" alt="Before the Whistle"></figure></a>
-    <a href="assets/photos/02.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/02.jpg" alt="Final Buzzer"></figure></a>
-    <a href="assets/photos/03.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/03.jpg" alt="First Serve"></figure></a>
-    <a href="assets/photos/04.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/04.jpg" alt="Eyes on the Ball"></figure></a>
-    <a href="assets/photos/05.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/05.jpg" alt="Full Extension"></figure></a>
-    <a href="assets/photos/06.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/06.jpg" alt="The Huddle"></figure></a>
-    <a href="assets/photos/07.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/07.jpg" alt="Under the Lights"></figure></a>
-    <a href="assets/photos/08.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/08.jpg" alt="Off the Bench"></figure></a>
-    <a href="assets/photos/09.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/09.jpg" alt="Set Point"></figure></a>
-    <a href="assets/photos/10.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/10.jpg" alt="Contact"></figure></a>
-    <a href="assets/photos/11.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/11.jpg" alt="The Stands"></figure></a>
-    <a href="assets/photos/12.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/12.jpg" alt="Low Angle"></figure></a>
-    <a href="assets/photos/13.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/13.jpg" alt="Breakaway"></figure></a>
-    <a href="assets/photos/14.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/14.jpg" alt="After the Goal"></figure></a>
-    <a href="assets/photos/15.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/15.jpg" alt="Team Photo"></figure></a>
-    <a href="assets/photos/16.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/16.jpg" alt="Game Face"></figure></a>
-    <a href="assets/photos/17.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/17.jpg" alt="Rookie Season"></figure></a>
-    <a href="assets/photos/18.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/18.jpg" alt="Sideline"></figure></a>
-    <a href="assets/photos/19.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/19.jpg" alt="Last Light"></figure></a>
-    <a href="assets/photos/20.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/20.jpg" alt="Matchday"></figure></a>
-    <a href="assets/photos/21.jpg" target="_blank" rel="noopener"><figure><img src="assets/photos/21.jpg" alt="Behind the Lens"></figure></a>
-  </div>
-
-  <p class="gallery-note" data-i18n="note">Want to see these the other way? Visit the interactive archive on the home page.</p>
+  <div class="gallery-rows"></div>
 
   <div class="cta-row" style="justify-content:center; margin-top:28px;">
     <a class="cta-btn" href="contact.html#quote" data-i18n="ctaQuote">Request a Quote</a>
-    <a class="cta-btn ghost" href="index.html#portfolio" data-i18n="ctaArchive">View Interactive Archive</a>
   </div>
 </main>
+
+<div id="lit">
+  <div class="scrim" data-close></div>
+  <div class="plate">
+    <div class="shot">
+      <img id="litImg" alt="">
+      <button class="close" data-close data-i18n="litClose">Close</button>
+    </div>
+    <div class="meta">
+      <div>
+        <h2 id="litTitle"></h2>
+        <div class="where" id="litWhere"></div>
+      </div>
+      <p class="note" id="litNote"></p>
+    </div>
+  </div>
+</div>
 
 <div id="dot"></div>
 
@@ -99,8 +80,8 @@ initSiteChrome({
     backHome:"Home",
     eyebrow:"Portfolio · Sport", h1:"Sport",
     lead:"From the first serve to the final buzzer — the split seconds that make every game worth remembering.",
-    note:"Want to see these the other way? Visit the interactive archive on the home page.",
-    ctaQuote:"Request a Quote", ctaArchive:"View Interactive Archive"
+    litClose:"Close",
+    ctaQuote:"Request a Quote"
   },
   es:{
     title:"Deportes — Juan Serrano | Serrano Studio Photography",
@@ -113,9 +94,28 @@ initSiteChrome({
     backHome:"Inicio",
     eyebrow:"Portafolio · Deportes", h1:"Deportes",
     lead:"Desde el primer saque hasta el silbatazo final — los instantes que hacen que cada partido valga la pena recordar.",
-    note:"¿Quieres verlas de otra forma? Visita el archivo interactivo en la página de inicio.",
-    ctaQuote:"Solicitar Cotización", ctaArchive:"Ver Archivo Interactivo"
+    litClose:"Cerrar",
+    ctaQuote:"Solicitar Cotización"
   }
+});
+
+initGallery({
+  folder: "assets/photos",
+  photos: [
+    {id:"01", en:{title:"Game Face", where:"Southern California", note:"A close-up focus before the play unfolds — the look every athlete gets when the moment matters."}, es:{title:"Cara de Juego", where:"Sur de California", note:"Un primer plano de concentración antes de que la jugada se desarrolle — la mirada que todo atleta tiene cuando el momento importa."}},
+    {id:"02", en:{title:"Breaking Away", where:"Southern California", note:"A midfielder splits the defense while a fallen opponent and the referee's call hang in the same frame."}, es:{title:"Rompiendo la Defensa", where:"Sur de California", note:"Un mediocampista rompe la defensa mientras un rival caído y la señal del árbitro quedan en el mismo cuadro."}},
+    {id:"03", en:{title:"Eyes on the Ball", where:"Southern California", note:"Full stride, eyes locked on the ball in the air — the instant before contact."}, es:{title:"Ojos en el Balón", where:"Sur de California", note:"A toda velocidad, con la mirada fija en el balón en el aire — el instante antes del contacto."}},
+    {id:"04", en:{title:"After the Bell", where:"Southern California", note:"A fighter takes in the ring and the crowd in the seconds after the round ends."}, es:{title:"Después de la Campana", where:"Sur de California", note:"Un boxeador observa el cuadrilátero y al público en los segundos después de terminar el asalto."}},
+    {id:"05", en:{title:"Team Celebration", where:"Southern California", note:"The whole bench closes in on the goal scorer — pure, unscripted celebration."}, es:{title:"Celebración de Equipo", where:"Sur de California", note:"Todo el banquillo se junta alrededor de quien anotó el gol — celebración pura, sin guion."}},
+    {id:"06", en:{title:"Fight Night", where:"Southern California", note:"Arms raised on the ropes, the crowd answering back — a professional boxing card under the lights."}, es:{title:"Noche de Boxeo", where:"Sur de California", note:"Brazos en alto sobre las cuerdas, el público respondiendo — una velada de boxeo profesional bajo las luces."}},
+    {id:"07", en:{title:"Team Photo", where:"Southern California", note:"Paris Saint-Germain lines up on the pitch before kickoff, a full house behind them."}, es:{title:"Foto de Equipo", where:"Sur de California", note:"El Paris Saint-Germain se alinea en la cancha antes del inicio, con el estadio lleno detrás."}},
+    {id:"08", en:{title:"Drive to the Basket", where:"Southern California", note:"A USC guard finishes through traffic on a pink-themed night at the arena."}, es:{title:"Camino a la Canasta", where:"Sur de California", note:"Un guardia de USC termina la jugada entre la defensa, en una noche de uniformes rosas en el gimnasio."}},
+    {id:"09", en:{title:"Toe to Toe", where:"Southern California", note:"Two fighters in the exchange — the moment a bout is actually decided."}, es:{title:"Frente a Frente", where:"Sur de California", note:"Dos boxeadores en el intercambio — el momento en que realmente se decide una pelea."}},
+    {id:"10", en:{title:"Arm Raised", where:"Southern California", note:"The instant a fighter's hand goes up and the result becomes official."}, es:{title:"Brazo en Alto", where:"Sur de California", note:"El instante en que se levanta la mano de un boxeador y el resultado se hace oficial."}},
+    {id:"11", en:{title:"Before the Whistle", where:"Southern California", note:"Hand over heart for the anthem, young ballboys standing close — the quiet before kickoff."}, es:{title:"Antes del Silbatazo", where:"Sur de California", note:"Mano en el corazón durante el himno, con los recogebalones a su lado — la calma antes del inicio."}},
+    {id:"12", en:{title:"Final Buzzer", where:"Southern California", note:"A player lets it out after the final horn — everything the game was building toward, in one frame."}, es:{title:"Silbatazo Final", where:"Sur de California", note:"Un jugador lo grita todo tras la chicharra final — todo lo que el partido venía construyendo, en un solo cuadro."}},
+    {id:"13", tall:true, en:{title:"Full Extension", where:"Southern California", note:"Every muscle committed to the celebration — a thousandth of a second that tells the whole story."}, es:{title:"Extensión Total", where:"Sur de California", note:"Cada músculo entregado a la celebración — una milésima de segundo que cuenta toda la historia."}}
+  ]
 });
 </script>
 </body>

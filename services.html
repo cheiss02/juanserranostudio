@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Services — Juan Serrano | Serrano Studio Photography</title>
-<meta name="description" content="Sports, portrait, and wedding photography services from Juan Serrano of Serrano Studio Photography, serving Southern California.">
+<meta name="description" content="Wedding, quinceañera, photo booth, portrait, and sports photography services from Juan Serrano of Serrano Studio Photography, serving Southern California.">
 <link rel="icon" href="assets/logo-white.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="content revealed">
@@ -18,14 +18,7 @@
     <img src="assets/logo-mono.png" alt="">
     <span class="wordmark-fallback">Juan<em>Serrano</em></span>
   </a>
-  <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
-    <span class="menu-label" data-i18n="menuLabel">Menu</span>
-    <span class="bars"><i></i><i></i></span>
-  </button>
-</header>
-
-<div id="menu">
-  <nav>
+  <nav class="site-nav">
     <a href="portfolio.html" data-i18n="navPortfolio">Portfolio</a>
     <a href="services.html" data-i18n="navServices">Services</a>
     <a href="about.html" data-i18n="navAbout">About</a>
@@ -37,25 +30,21 @@
       <button type="button" class="langbtn" data-lang="es" aria-pressed="false">ES</button>
     </span>
   </nav>
-  <div class="addr">
-    <span data-i18n="addrLine">Serving Southern California</span><br>
-    <a href="mailto:info@juanserranostudio.com">info@juanserranostudio.com</a>
-  </div>
-</div>
+</header>
 
 <main class="content-page">
   <a class="back-home" href="index.html" data-i18n="backHome">Home</a>
   <div class="eyebrow" data-i18n="eyebrow">Services</div>
   <h1 data-i18n="h1">Services</h1>
-  <p class="lead" data-i18n="lead">Each booking is scoped to the sport, subject, date, and location — here's where to start.</p>
+  <p class="lead" data-i18n="lead">Each booking is scoped to the event, date, and location — here's where to start.</p>
 
   <div class="service-rows">
     <div class="service-row">
       <div class="service-media">
         <div class="service-num">01</div>
-        <div class="service-photo"><img src="assets/photos/05.jpg" alt=""></div>
+        <div class="service-photo"><img src="assets/wedding/01.jpg" alt=""></div>
       </div>
-      <div class="service-info" data-i18n-html="rowSports"></div>
+      <div class="service-info" data-i18n-html="rowWedding"></div>
       <div class="service-cta">
         <div class="price" data-i18n="priceLabel">Contact for pricing</div>
         <a class="cta-btn" href="contact.html#quote" data-i18n="bookBtn">Book / Get a Quote</a>
@@ -66,7 +55,7 @@
         <div class="service-num">02</div>
         <div class="service-photo"><img src="assets/quinceanera/01.jpg" alt=""></div>
       </div>
-      <div class="service-info" data-i18n-html="rowPortrait"></div>
+      <div class="service-info" data-i18n-html="rowQuince"></div>
       <div class="service-cta">
         <div class="price" data-i18n="priceLabel">Contact for pricing</div>
         <a class="cta-btn" href="contact.html#quote" data-i18n="bookBtn">Book / Get a Quote</a>
@@ -75,17 +64,6 @@
     <div class="service-row">
       <div class="service-media">
         <div class="service-num">03</div>
-        <div class="service-photo"><img src="assets/wedding/01.jpg" alt=""></div>
-      </div>
-      <div class="service-info" data-i18n-html="rowWeddings"></div>
-      <div class="service-cta">
-        <div class="price" data-i18n="priceLabel">Contact for pricing</div>
-        <a class="cta-btn" href="contact.html#quote" data-i18n="bookBtn">Book / Get a Quote</a>
-      </div>
-    </div>
-    <div class="service-row">
-      <div class="service-media">
-        <div class="service-num">04</div>
         <div class="service-photo"><img src="assets/services/photobooth.jpg" alt=""></div>
       </div>
       <div class="service-info" data-i18n-html="rowPhotoBooth"></div>
@@ -94,8 +72,29 @@
         <a class="cta-btn" href="contact.html#quote" data-i18n="bookBtn">Book / Get a Quote</a>
       </div>
     </div>
+    <div class="service-row">
+      <div class="service-media">
+        <div class="service-num">04</div>
+        <div class="service-photo"><img src="assets/portraits/02.jpg" alt=""></div>
+      </div>
+      <div class="service-info" data-i18n-html="rowPortrait"></div>
+      <div class="service-cta">
+        <div class="price" data-i18n="priceLabel">Contact for pricing</div>
+        <a class="cta-btn" href="contact.html#quote" data-i18n="bookBtn">Book / Get a Quote</a>
+      </div>
+    </div>
+    <div class="service-row">
+      <div class="service-media">
+        <div class="service-num">05</div>
+        <div class="service-photo"><img src="assets/photos/05.jpg" alt=""></div>
+      </div>
+      <div class="service-info" data-i18n-html="rowSports"></div>
+      <div class="service-cta">
+        <div class="price" data-i18n="priceLabel">Contact for pricing</div>
+        <a class="cta-btn" href="contact.html#quote" data-i18n="bookBtn">Book / Get a Quote</a>
+      </div>
+    </div>
   </div>
-  <p class="form-note" style="margin-top:-6px;" data-i18n="photoCredit">Photo booth example photo: Vie Studio via Pexels.</p>
 
   <div class="cta-row">
     <a class="cta-btn" href="contact.html#quote" data-i18n="ctaQuote">Request a Quote</a>
@@ -114,7 +113,7 @@
 initSiteChrome({
   en:{
     title:"Services — Juan Serrano | Serrano Studio Photography",
-    metaDesc:"Sports, portrait, and wedding photography services from Juan Serrano of Serrano Studio Photography, serving Southern California.",
+    metaDesc:"Wedding, quinceañera, photo booth, portrait, and sports photography services from Juan Serrano of Serrano Studio Photography, serving Southern California.",
     menuLabel:"Menu",
     navPortfolio:"Portfolio", navServices:"Services", navAbout:"About", navContact:"Contact",
     addrLine:"Serving Southern California",
@@ -122,18 +121,18 @@ initSiteChrome({
     ariaWordmark:"Juan Serrano — Serrano Studio Photography",
     backHome:"Home",
     eyebrow:"Services", h1:"Services",
-    lead:"Each booking is scoped to the sport, subject, date, and location — here’s where to start.",
+    lead:"Each booking is scoped to the event, date, and location — here’s where to start.",
     ctaQuote:"Request a Quote", ctaEmail:"Email the Studio",
     priceLabel:"Contact for pricing", bookBtn:"Book / Get a Quote",
-    photoCredit:"Photo booth example photo: Vie Studio via Pexels.",
-    rowSports:"<h3>Sports</h3><p class='subtitle'>Competition and training coverage.</p><p class='desc'>For athletes, teams, clubs, and brands that need a considered record of the action and everything around it.</p><div class='included-label'>What's Included</div><ul class='included-list'><li>Game-day and match coverage</li><li>Athlete features and team portraits</li><li>Training and pre-season sessions</li><li>Edited files for press and social</li></ul>",
+    rowWedding:"<h3>Wedding</h3><p class='subtitle'>A calm, observant record of the day.</p><p class='desc'>Coverage follows the schedule and atmosphere of your wedding, from getting ready through the reception.</p><div class='included-label'>What's Included</div><ul class='included-list'><li>Full-day or partial-day coverage</li><li>Engagement and pre-wedding sessions</li><li>Second photographer by request</li><li>Private online gallery</li></ul>",
+    rowQuince:"<h3>Quinceañera</h3><p class='subtitle'>A full-day record of the celebration.</p><p class='desc'>From getting ready through the father-daughter dance, for the court, the family, and the room.</p><div class='included-label'>What's Included</div><ul class='included-list'><li>Getting-ready and portrait sessions</li><li>Church or ceremony coverage</li><li>Reception and choreography</li><li>Private online gallery</li></ul>",
+    rowPhotoBooth:"<h3>Photo Booth</h3><p class='subtitle'>A simple, fun add-on for your event.</p><p class='desc'>For quinceañeras, weddings, and parties — a backdrop, props, and instant keepsakes for your guests.</p><div class='included-label'>What's Included</div><ul class='included-list'><li>Backdrop and prop setup</li><li>Instant prints or digital sharing</li><li>Attended for the length of your event</li><li>Pairs well with any event package</li></ul>",
     rowPortrait:"<h3>Portrait</h3><p class='subtitle'>Portraits made with a clear point of view.</p><p class='desc'>For individuals, families, teams, and organizations, in studio or at a location that suits the subject.</p><div class='included-label'>What's Included</div><ul class='included-list'><li>Professional headshots and personal branding</li><li>Studio and location portrait sessions</li><li>Family and milestone portraits</li><li>Executive and team portraits</li></ul>",
-    rowWeddings:"<h3>Weddings</h3><p class='subtitle'>A calm, observant record of the day.</p><p class='desc'>Coverage follows the schedule and atmosphere of your wedding, from getting ready through the reception.</p><div class='included-label'>What's Included</div><ul class='included-list'><li>Full-day or partial-day coverage</li><li>Engagement and pre-wedding sessions</li><li>Second photographer by request</li><li>Private online gallery</li></ul>",
-    rowPhotoBooth:"<h3>Photo Booth</h3><p class='subtitle'>A simple, fun add-on for your event.</p><p class='desc'>For quinceañeras, weddings, and parties — a backdrop, props, and instant keepsakes for your guests.</p><div class='included-label'>What's Included</div><ul class='included-list'><li>Backdrop and prop setup</li><li>Instant prints or digital sharing</li><li>Attended for the length of your event</li><li>Pairs well with any event package</li></ul>"
+    rowSports:"<h3>Sports</h3><p class='subtitle'>Competition and training coverage.</p><p class='desc'>For athletes, teams, clubs, and brands that need a considered record of the action and everything around it.</p><div class='included-label'>What's Included</div><ul class='included-list'><li>Game-day and match coverage</li><li>Athlete features and team portraits</li><li>Training and pre-season sessions</li><li>Edited files for press and social</li></ul>"
   },
   es:{
     title:"Servicios — Juan Serrano | Serrano Studio Photography",
-    metaDesc:"Servicios de fotografía deportiva, de retrato y de bodas de Juan Serrano, de Serrano Studio Photography, sirviendo al Sur de California.",
+    metaDesc:"Servicios de fotografía de bodas, quinceañeras, cabina de fotos, retratos y deportes de Juan Serrano, de Serrano Studio Photography, sirviendo al Sur de California.",
     menuLabel:"Menú",
     navPortfolio:"Portafolio", navServices:"Servicios", navAbout:"Acerca de", navContact:"Contacto",
     addrLine:"Sirviendo al Sur de California",
@@ -141,14 +140,14 @@ initSiteChrome({
     ariaWordmark:"Juan Serrano — Fotografía de Serrano Studio",
     backHome:"Inicio",
     eyebrow:"Servicios", h1:"Servicios",
-    lead:"Cada reserva se define según el deporte, el sujeto, la fecha y la ubicación — aquí es donde empezar.",
+    lead:"Cada reserva se define según el evento, la fecha y la ubicación — aquí es donde empezar.",
     ctaQuote:"Solicitar Cotización", ctaEmail:"Escribir al Estudio",
     priceLabel:"Contacta para cotización", bookBtn:"Reservar / Cotizar",
-    photoCredit:"Foto de ejemplo de cabina de fotos: Vie Studio vía Pexels.",
-    rowSports:"<h3>Deportes</h3><p class='subtitle'>Cobertura de competencia y entrenamiento.</p><p class='desc'>Para atletas, equipos, clubes y marcas que necesitan un registro cuidado de la acción y de todo lo que la rodea.</p><div class='included-label'>Qué Incluye</div><ul class='included-list'><li>Cobertura de día de juego y partidos</li><li>Reportajes de atletas y retratos de equipo</li><li>Sesiones de entrenamiento y pretemporada</li><li>Archivos editados para prensa y redes</li></ul>",
+    rowWedding:"<h3>Bodas</h3><p class='subtitle'>Un registro tranquilo y observador del día.</p><p class='desc'>La cobertura sigue el horario y el ambiente de tu boda, desde los preparativos hasta la recepción.</p><div class='included-label'>Qué Incluye</div><ul class='included-list'><li>Cobertura de día completo o parcial</li><li>Sesiones de compromiso y preboda</li><li>Segundo fotógrafo bajo solicitud</li><li>Galería privada en línea</li></ul>",
+    rowQuince:"<h3>Quinceañera</h3><p class='subtitle'>Un registro completo de la celebración.</p><p class='desc'>Desde los preparativos hasta el baile de padre e hija, para la corte, la familia y el salón.</p><div class='included-label'>Qué Incluye</div><ul class='included-list'><li>Sesiones de preparativos y retratos</li><li>Cobertura de iglesia o ceremonia</li><li>Recepción y coreografía</li><li>Galería privada en línea</li></ul>",
+    rowPhotoBooth:"<h3>Cabina de Fotos</h3><p class='subtitle'>Un complemento simple y divertido para tu evento.</p><p class='desc'>Para quinceañeras, bodas y fiestas — un fondo, accesorios y recuerdos instantáneos para tus invitados.</p><div class='included-label'>Qué Incluye</div><ul class='included-list'><li>Montaje de fondo y accesorios</li><li>Impresiones al instante o compartidas digitalmente</li><li>Atendida durante la duración de tu evento</li><li>Ideal para cualquier paquete de evento</li></ul>",
     rowPortrait:"<h3>Retrato</h3><p class='subtitle'>Retratos hechos con un punto de vista claro.</p><p class='desc'>Para individuos, familias, equipos y organizaciones, en estudio o en una ubicación que se ajuste al sujeto.</p><div class='included-label'>Qué Incluye</div><ul class='included-list'><li>Headshots profesionales y marca personal</li><li>Sesiones de retrato en estudio y locación</li><li>Retratos familiares y de hitos importantes</li><li>Retratos ejecutivos y de equipo</li></ul>",
-    rowWeddings:"<h3>Bodas</h3><p class='subtitle'>Un registro tranquilo y observador del día.</p><p class='desc'>La cobertura sigue el horario y el ambiente de tu boda, desde los preparativos hasta la recepción.</p><div class='included-label'>Qué Incluye</div><ul class='included-list'><li>Cobertura de día completo o parcial</li><li>Sesiones de compromiso y preboda</li><li>Segundo fotógrafo bajo solicitud</li><li>Galería privada en línea</li></ul>",
-    rowPhotoBooth:"<h3>Cabina de Fotos</h3><p class='subtitle'>Un complemento simple y divertido para tu evento.</p><p class='desc'>Para quinceañeras, bodas y fiestas — un fondo, accesorios y recuerdos instantáneos para tus invitados.</p><div class='included-label'>Qué Incluye</div><ul class='included-list'><li>Montaje de fondo y accesorios</li><li>Impresiones al instante o compartidas digitalmente</li><li>Atendida durante la duración de tu evento</li><li>Ideal para cualquier paquete de evento</li></ul>"
+    rowSports:"<h3>Deportes</h3><p class='subtitle'>Cobertura de competencia y entrenamiento.</p><p class='desc'>Para atletas, equipos, clubes y marcas que necesitan un registro cuidado de la acción y de todo lo que la rodea.</p><div class='included-label'>Qué Incluye</div><ul class='included-list'><li>Cobertura de día de juego y partidos</li><li>Reportajes de atletas y retratos de equipo</li><li>Sesiones de entrenamiento y pretemporada</li><li>Archivos editados para prensa y redes</li></ul>"
   }
 });
 </script>

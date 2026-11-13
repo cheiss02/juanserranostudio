@@ -267,7 +267,9 @@ body.lit #lit{opacity:1; pointer-events:auto;}
   position:relative;
   width:min(72vw, 860px, calc((100vh - 230px) * 1.5));
   transition:transform .62s ease, opacity .42s ease;
+  transform:scale(.95); opacity:0;
 }
+body.lit .plate{transform:scale(1); opacity:1;}
 .plate.tall{width:min(52vw, 560px, calc((100vh - 230px) * 0.8));}
 .shot{
   position:relative; width:100%; aspect-ratio:3/2; border-radius:2px;
@@ -451,16 +453,41 @@ body.lit #lit{opacity:1; pointer-events:auto;}
 body.content{overflow-x:hidden; overflow-y:auto; height:auto; min-height:100vh; min-height:100dvh;}
 .site-header{
   position:fixed; top:0; left:0; right:0; z-index:60;
-  display:flex; justify-content:space-between; align-items:flex-start;
-  padding:calc(var(--pad) * .8 + var(--safe-top)) calc(var(--pad) + var(--safe-right)) calc(var(--pad) * .35) calc(var(--pad) + var(--safe-left));
-  mix-blend-mode:difference;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:calc(var(--pad) * .7 + var(--safe-top)) calc(var(--pad) + var(--safe-right)) calc(var(--pad) * .7) calc(var(--pad) + var(--safe-left));
+  background:var(--bg);
+  gap:clamp(16px, 3vw, 40px);
 }
-body.menuopen .site-header{z-index:90; mix-blend-mode:normal;}
+
+.site-nav{
+  display:flex; flex-wrap:wrap; align-items:center;
+  gap:clamp(16px, 2.6vw, 34px);
+}
+.site-nav a{
+  font-family:var(--sans); font-weight:600;
+  font-size:13px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--ink); text-decoration:none; opacity:.9;
+  transition:opacity .25s ease;
+}
+.site-nav a:hover, .site-nav a:focus-visible{opacity:1;}
+.site-nav .navsep{width:1px; height:16px; background:rgba(244,242,239,.3); flex-shrink:0;}
+
+@media (max-width:640px){
+  .site-header{flex-wrap:wrap; row-gap:14px;}
+  .site-nav{gap:14px; width:100%; justify-content:center;}
+  .site-nav a{font-size:12px;}
+}
 
 .content-page{
   position:relative; z-index:5; max-width:860px; margin:0 auto;
   padding:calc(var(--pad) * 7 + var(--safe-top)) calc(var(--pad) + var(--safe-right)) calc(var(--pad) * 6 + var(--safe-bottom)) calc(var(--pad) + var(--safe-left));
 }
+.about-portrait img{
+  width:180px; height:180px; object-fit:cover; object-position:50% 20%;
+  border-radius:4px; margin-bottom:26px; display:block;
+}
+.about-subhead{font-family:var(--serif); font-weight:400; font-size:clamp(20px, 2.2vw, 26px); margin:0 0 18px;}
+
 .back-home{
   display:inline-flex; align-items:center; gap:7px;
   font-size:11px; letter-spacing:.14em; text-transform:uppercase;

@@ -14,6 +14,7 @@ function initSiteChrome(UI){
   }catch(e){}
 
   function openMenu(){
+    if (!menu || !menuBtn) return;
     menuOpen = true;
     document.body.classList.add("menuopen");
     menu.classList.add("open");
@@ -21,6 +22,7 @@ function initSiteChrome(UI){
     menuBtn.setAttribute("aria-label", UI[currentLang].ariaCloseMenu);
   }
   function closeMenu(){
+    if (!menu || !menuBtn) return;
     menuOpen = false;
     document.body.classList.remove("menuopen");
     menu.classList.remove("open");
@@ -61,13 +63,15 @@ function initSiteChrome(UI){
       if (t[key] !== undefined) el.innerHTML = t[key];
     });
 
-    menuBtn.setAttribute("aria-label", menuOpen ? t.ariaCloseMenu : t.ariaOpenMenu);
+    if (menuBtn) menuBtn.setAttribute("aria-label", menuOpen ? t.ariaCloseMenu : t.ariaOpenMenu);
     var wordmarkA = document.querySelector(".wordmark");
     if (wordmarkA && t.ariaWordmark) wordmarkA.setAttribute("aria-label", t.ariaWordmark);
 
     document.querySelectorAll(".langbtn").forEach(function(btn){
       btn.setAttribute("aria-pressed", btn.getAttribute("data-lang") === lang ? "true" : "false");
     });
+
+    document.dispatchEvent(new CustomEvent("ss:langchange", {detail:{lang:lang}}));
   }
 
   document.querySelectorAll(".langbtn").forEach(function(btn){
@@ -104,5 +108,89 @@ function initSiteChrome(UI){
   return {applyLang:applyLang};
 }
 
+function getStoredLang(){
+  try{
+    var saved = localStorage.getItem("ss_lang");
+    if (saved === "en" || saved === "es") return saved;
+  }catch(e){}
+  return "en";
+}
+
+function initGallery(opts){
+  var container = document.querySelector(opts.container || ".gallery-rows");
+  var lit = document.getElementById("lit");
+  var litImg = document.getElementById("litImg");
+  var litTitle = document.getElementById("litTitle");
+  var litWhere = document.getElementById("litWhere");
+  var litNote = document.getElementById("litNote");
+  var plate = lit.querySelector(".plate");
+  var figs = [];
+  var openIndex = -1;
+
+  function textFor(p){ return p[getStoredLang()] || p.en; }
+
+  opts.photos.forEach(function(p, i){
+    var fig = document.createElement("figure");
+    fig.setAttribute("tabindex", "0");
+    fig.setAttribute("role", "button");
+    fig.setAttribute("data-idx", i);
+    var img = document.createElement("img");
+    img.src = opts.folder + "/" + p.id + ".jpg";
+    img.alt = textFor(p).title;
+    fig.appendChild(img);
+    if (opts.captions !== false){
+      var cap = document.createElement("figcaption");
+      cap.textContent = textFor(p).title;
+      fig.appendChild(cap);
+    }
+    fig.addEventListener("click", function(){ open(i); });
+    fig.addEventListener("keydown", function(e){
+      if (e.key === "Enter" || e.key === " "){ e.preventDefault(); open(i); }
+    });
+    container.appendChild(fig);
+    figs.push({el:fig, img:img, cap:fig.querySelector("figcaption")});
+  });
+
+  function open(i){
+    openIndex = i;
+    var p = opts.photos[i];
+    var t = textFor(p);
+    litImg.src = opts.folder + "/" + p.id + ".jpg";
+    litImg.alt = t.title;
+    litTitle.textContent = t.title;
+    litWhere.textContent = t.where || "";
+    litNote.textContent = t.note || "";
+    plate.classList.toggle("tall", !!p.tall);
+    document.body.classList.add("lit");
+    document.body.style.overflow = "hidden";
+  }
+  function close(){
+    openIndex = -1;
+    document.body.classList.remove("lit");
+    document.body.style.overflow = "";
+  }
+  lit.querySelectorAll("[data-close]").forEach(function(el){
+    el.addEventListener("click", close);
+  });
+  window.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && document.body.classList.contains("lit")) close();
+  });
+
+  document.addEventListener("ss:langchange", function(){
+    figs.forEach(function(f, i){
+      var t = textFor(opts.photos[i]);
+      f.img.alt = t.title;
+      if (f.cap) f.cap.textContent = t.title;
+    });
+    if (openIndex >= 0){
+      var t2 = textFor(opts.photos[openIndex]);
+      litTitle.textContent = t2.title;
+      litWhere.textContent = t2.where || "";
+      litNote.textContent = t2.note || "";
+    }
+  });
+}
+
 window.initSiteChrome = initSiteChrome;
+window.initGallery = initGallery;
 })();
