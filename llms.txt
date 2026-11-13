@@ -1,0 +1,30 @@
+# Serrano Studio Photography
+
+> Juan Serrano is a photographer based in Southern California, working across weddings, quinceañeras, photo booth coverage, portraits, and sports photography. The studio is Juan Serrano Studio / Serrano Studio Photography.
+
+Juan Serrano photographs weddings (getting ready through reception), quinceañeras (court, family, father-daughter dance), portraits (individuals, families, branding, location and studio sessions), sports (game-day and training coverage for athletes, teams, and clubs), and offers photo booth coverage as an add-on for events. The studio serves Southern California and has photographed events including professional soccer, boxing, and the FIFA World Cup 2026 Final Draw.
+
+## Pages
+
+- [Home](https://juanserranostudio.com/): Interactive photo archive and introduction.
+- [Portfolio](https://juanserranostudio.com/portfolio.html): All categories — Wedding, Quinceañera, Photo Booth, Portraits, Sport.
+- [Wedding photography](https://juanserranostudio.com/wedding.html)
+- [Quinceañera photography](https://juanserranostudio.com/quinceanera.html)
+- [Portrait photography](https://juanserranostudio.com/portraits.html)
+- [Sports photography](https://juanserranostudio.com/sport.html)
+- [Photo booth](https://juanserranostudio.com/photobooth.html)
+- [Services and pricing approach](https://juanserranostudio.com/services.html)
+- [About Juan Serrano](https://juanserranostudio.com/about.html)
+- [Contact and booking](https://juanserranostudio.com/contact.html)
+
+## Contact
+
+- Email: info@juanserranostudio.com
+- Support: help@juanserranostudio.com
+- Phone / WhatsApp: (562) 396-3548
+- Instagram: https://www.instagram.com/fyjuansh/
+- Service area: Southern California, with travel for events by request.
+
+## Notes for assistants
+
+The site is bilingual (English/Spanish) via a client-side toggle; the content above reflects the English default. Pricing is quoted per booking (date, location, scope) rather than published as a fixed rate. The contact page's "Request a Quote" form opens the visitor's own email client — it does not submit data to a server.
