@@ -123,8 +123,6 @@ var bar = document.getElementById("bar");
 var intro = document.getElementById("intro");
 var film = document.getElementById("film");
 var skipBtn = document.getElementById("skip");
-var menu = document.getElementById("menu");
-var menuBtn = document.getElementById("menuBtn");
 var gridBtn = document.getElementById("gridBtn");
 var avatarImg = document.getElementById("avatar");
 var lit = document.getElementById("lit");
@@ -534,7 +532,6 @@ function applyLang(lang){
     if (t.headlineWords[i] !== undefined) span.textContent = t.headlineWords[i];
   });
 
-  menuBtn.setAttribute("aria-label", menuOpen ? t.ariaCloseMenu : t.ariaOpenMenu);
   gridBtn.setAttribute("aria-label", t.ariaToggleGrid);
   var wordmarkA = document.querySelector(".wordmark");
   if (wordmarkA) wordmarkA.setAttribute("aria-label", t.ariaWordmark);
@@ -565,34 +562,6 @@ function applyLang(lang){
 }
 document.querySelectorAll(".langbtn").forEach(function(btn){
   btn.addEventListener("click", function(){ applyLang(btn.getAttribute("data-lang")); });
-});
-
-/* ---------- menu ---------- */
-var menuOpen = false;
-function openMenu(){
-  menuOpen = true;
-  document.body.classList.add("menuopen");
-  menu.classList.add("open");
-  menuBtn.setAttribute("aria-expanded","true");
-  menuBtn.setAttribute("aria-label","Close menu");
-}
-function closeMenu(){
-  menuOpen = false;
-  document.body.classList.remove("menuopen");
-  menu.classList.remove("open");
-  menuBtn.setAttribute("aria-expanded","false");
-  menuBtn.setAttribute("aria-label","Open menu");
-}
-menuBtn.addEventListener("click", function(){ menuOpen ? closeMenu() : openMenu(); });
-var menuGridLink = menu.querySelector("[data-grid]");
-if (menuGridLink){
-  menuGridLink.addEventListener("click", function(e){ e.preventDefault(); closeMenu(); toggleGrid(true); });
-}
-menu.querySelectorAll("[data-close-menu]").forEach(function(a){
-  a.addEventListener("click", function(e){ e.preventDefault(); closeMenu(); });
-});
-menu.querySelectorAll('a[href^="mailto:"]').forEach(function(a){
-  a.addEventListener("click", function(){ closeMenu(); });
 });
 
 /* ---------- grid toggle ---------- */
@@ -681,7 +650,6 @@ lit.querySelectorAll("[data-close]").forEach(function(el){
 window.addEventListener("keydown", function(e){
   if (e.key === "Escape"){
     if (document.body.classList.contains("lit")) closeLightbox();
-    else if (menuOpen) closeMenu();
     else if (document.body.classList.contains("gridview")) toggleGrid(false);
   }
 });

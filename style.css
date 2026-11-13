@@ -133,11 +133,17 @@ body.revealed .chrome{opacity:1;}
 /* ---------- header ---------- */
 header.chrome{
   position:fixed; top:0; left:0; right:0; z-index:60;
-  display:flex; justify-content:space-between; align-items:flex-start;
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;
+  gap:clamp(12px, 2.4vw, 28px);
   padding:calc(var(--pad) * .8 + var(--safe-top)) calc(var(--pad) + var(--safe-right)) calc(var(--pad) * .35) calc(var(--pad) + var(--safe-left));
   mix-blend-mode:difference;
 }
-body.menuopen header{z-index:90; mix-blend-mode:normal;}
+
+@media (max-width:640px){
+  header.chrome{row-gap:12px;}
+  header.chrome .site-nav{gap:14px; width:100%; justify-content:center;}
+  header.chrome .site-nav a{font-size:12px;}
+}
 .wordmark{
   display:flex; align-items:center;
   text-decoration:none; white-space:nowrap;
