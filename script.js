@@ -134,7 +134,6 @@ var intro = document.getElementById("intro");
 var film = document.getElementById("film");
 var skipBtn = document.getElementById("skip");
 var gridBtn = document.getElementById("gridBtn");
-var avatarImg = document.getElementById("avatar");
 var lit = document.getElementById("lit");
 var plate = lit.querySelector(".plate");
 var litImg = document.getElementById("litImg");
@@ -154,60 +153,6 @@ if (splashLogo){
   splashLogo.addEventListener("error", function(){
     splash.classList.add("logo-broken");
   }, {once:true});
-}
-
-/* ---------- image decode / downscale ---------- */
-function cardDecodeMax(){
-  var w = window.innerWidth;
-  if (w<=380) return 420;
-  if (w<=640) return 520;
-  if (w<=900) return 640;
-  return 760;
-}
-function decodeDownscale(src, maxDim){
-  return new Promise(function(resolve){
-    var img = new Image();
-    img.onload = function(){
-      try{
-        var w = img.naturalWidth, h = img.naturalHeight;
-        if (!w || !h || (w<=maxDim && h<=maxDim)){ resolve(src); return; }
-        var scale = Math.min(1, maxDim/Math.max(w,h));
-        var cw = Math.max(1, Math.round(w*scale));
-        var ch = Math.max(1, Math.round(h*scale));
-        var canvas = document.createElement("canvas");
-        canvas.width = cw; canvas.height = ch;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img,0,0,cw,ch);
-        canvas.toBlob(function(blob){
-          resolve(blob ? URL.createObjectURL(blob) : src);
-        }, "image/webp", 0.88);
-      }catch(e){ resolve(src); }
-    };
-    img.onerror = function(){ resolve(src); };
-    img.src = src;
-  });
-}
-function decodeAvatar(src, maxWidth){
-  return new Promise(function(resolve){
-    var img = new Image();
-    img.onload = function(){
-      try{
-        var w = img.naturalWidth, h = img.naturalHeight;
-        if (!w || w<=maxWidth){ resolve(src); return; }
-        var scale = maxWidth/w;
-        var cw = maxWidth, ch = Math.max(1, Math.round(h*scale));
-        var canvas = document.createElement("canvas");
-        canvas.width = cw; canvas.height = ch;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img,0,0,cw,ch);
-        canvas.toBlob(function(blob){
-          resolve(blob ? URL.createObjectURL(blob) : src);
-        }, "image/webp", 0.88);
-      }catch(e){ resolve(src); }
-    };
-    img.onerror = function(){ resolve(src); };
-    img.src = src;
-  });
 }
 
 /* ---------- splash progress ---------- */
@@ -232,7 +177,9 @@ function splashReport(){
 }
 function maybeFinishSplash(){
   var elapsed = performance.now() - splashStarted;
-  if (splashLoaded>=splashTotal && elapsed>=1150) finishSplash();
+  /* Don't hold the splash for every last photo — once most are in, go;
+     the rest fade into the sphere as they arrive. */
+  if (splashLoaded >= Math.ceil(splashTotal*0.7) && elapsed>=800) finishSplash();
 }
 function finishSplash(){
   if (splashFinished) return;
@@ -249,8 +196,8 @@ function finishSplash(){
     }, 950);
   });
 }
-splashMinTimer = setTimeout(maybeFinishSplash, 1150);
-splashMaxTimer = setTimeout(finishSplash, 9000);
+splashMinTimer = setTimeout(maybeFinishSplash, 800);
+splashMaxTimer = setTimeout(finishSplash, 3500); /* slow connection: never wait longer than this */
 
 /* ---------- sphere geometry ---------- */
 var GA = Math.PI * (3 - Math.sqrt(5));
@@ -314,20 +261,27 @@ photos.forEach(function(p, i){
   gridFigs.push({el:fig, img:img, cap:cap});
 });
 
-/* decode all photos */
-var decodeMax = cardDecodeMax();
+/* Load the sphere/grid photos from assets/photos/thumbs (≤760px, ~60KB
+   each — about 1MB total instead of ~6MB of originals). The full-size
+   file is only fetched when a photo is opened in the lightbox. */
+var loadedOnce = {};
 photos.forEach(function(p, i){
-  var src = "assets/photos/" + p.id + ".jpg";
-  decodeDownscale(src, decodeMax).then(function(thumb){
-    cards[i].thumbSrc = thumb;
-    cards[i].img.src = thumb;
+  var src = "assets/photos/thumbs/" + p.id + ".jpg";
+  function done(){
+    cards[i].thumbSrc = src;
+    cards[i].img.src = src;
     cards[i].img.classList.add("in");
-    gridFigs[i].img.src = thumb;
+    gridFigs[i].img.src = src;
     splashReport();
+  }
+  if (loadedOnce[p.id]){ loadedOnce[p.id].then(done); return; } /* repeated photos share one download */
+  loadedOnce[p.id] = new Promise(function(resolve){
+    var im = new Image();
+    im.decoding = "async";
+    im.onload = im.onerror = function(){ resolve(); };
+    im.src = src;
   });
-});
-decodeAvatar("assets/avatar.jpeg", 240).then(function(src){
-  avatarImg.src = src;
+  loadedOnce[p.id].then(done);
 });
 
 /* ---------- layout (position cards on sphere) ---------- */
@@ -547,7 +501,7 @@ window.addEventListener("pointercancel", function(){ isDragging = false; dragSta
 function applyLang(lang){
   if (!UI[lang]) lang = "en";
   currentLang = lang;
-  try{ localStorage.setItem("ss_lang", lang); }catch(e){}
+  if (window.ssRememberLang) window.ssRememberLang(lang); else { try{ localStorage.setItem("ss_lang", lang); }catch(e){} }
   var t = UI[lang];
 
   document.documentElement.lang = lang;

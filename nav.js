@@ -6,7 +6,8 @@
 var SHARED = {
   en:{
     navPortfolio:"Portfolio", navServices:"Services", navAbout:"About", navContact:"Contact",
-    privacyLink:"Privacy", termsLink:"Terms",
+    privacyLink:"Privacy Policy", termsLink:"Terms & Conditions", cookieLink:"Cookie Policy",
+    refundLink:"Refund Policy", accessLink:"Accessibility", footLegal:"Legal",
     footCtaLine:"Let’s capture your day.", footCtaBtn:"Request a Quote",
     footTagline:"Quinceañera, wedding, portrait and sports photography in Southern California.",
     footExplore:"Explore", footContact:"Contact", footFollow:"Follow",
@@ -14,7 +15,8 @@ var SHARED = {
   },
   es:{
     navPortfolio:"Portafolio", navServices:"Servicios", navAbout:"Acerca de", navContact:"Contacto",
-    privacyLink:"Privacidad", termsLink:"Términos",
+    privacyLink:"Política de Privacidad", termsLink:"Términos y Condiciones", cookieLink:"Política de Cookies",
+    refundLink:"Política de Reembolsos", accessLink:"Accesibilidad", footLegal:"Legal",
     footCtaLine:"Capturemos tu día.", footCtaBtn:"Solicitar Cotización",
     footTagline:"Fotografía de quinceañeras, bodas, retratos y deportes en el Sur de California.",
     footExplore:"Explorar", footContact:"Contacto", footFollow:"Síguenos",
@@ -67,7 +69,7 @@ function initSiteChrome(UI){
   function applyLang(lang){
     if (!UI[lang]) lang = "en";
     currentLang = lang;
-    try{ localStorage.setItem("ss_lang", lang); }catch(e){}
+    rememberLang(lang);
     var t = Object.assign({}, SHARED[lang], UI[lang]);
 
     document.documentElement.lang = lang;
@@ -211,10 +213,67 @@ function initGallery(opts){
   });
 }
 
-/* Camera "shutter + flash" on every .cta-btn press (styles in style.css). */
+/* ---------- privacy / storage consent ----------
+   The site sets no cookies and no trackers. The only things it stores are
+   the language choice (ss_lang) and this notice's answer (ss_consent).
+   "Essential only" stops remembering the language between visits. */
+function getConsent(){
+  try{ return localStorage.getItem("ss_consent"); }catch(e){ return "unavailable"; }
+}
+function rememberLang(lang){
+  try{
+    if (getConsent() === "essential") localStorage.removeItem("ss_lang");
+    else localStorage.setItem("ss_lang", lang);
+  }catch(e){}
+}
+window.ssRememberLang = rememberLang; /* used by the homepage's script.js */
+
+var CONSENT_TXT = {
+  en:{text:"We don’t use tracking cookies. This site only remembers your language choice on your device.",
+      more:"Cookie Policy", accept:"Accept", essential:"Essential only", label:"Privacy notice"},
+  es:{text:"No usamos cookies de rastreo. Este sitio solo recuerda tu idioma en tu dispositivo.",
+      more:"Política de Cookies", accept:"Aceptar", essential:"Solo esenciales", label:"Aviso de privacidad"}
+};
+function initConsentBanner(){
+  var c = getConsent();
+  if (c === "accepted" || c === "essential" || c === "unavailable") return;
+  var bar = document.createElement("div");
+  bar.className = "consent-bar";
+  bar.setAttribute("role", "region");
+  bar.innerHTML = '<p class="consent-text"><span data-k="text"></span> <a href="cookie-policy.html" data-k="more"></a></p>' +
+    '<div class="consent-actions"><button type="button" class="consent-btn ghost" data-v="essential" data-k="essential"></button>' +
+    '<button type="button" class="consent-btn" data-v="accepted" data-k="accept"></button></div>';
+  function paint(){
+    var t = CONSENT_TXT[document.documentElement.lang === "es" ? "es" : "en"];
+    bar.setAttribute("aria-label", t.label);
+    bar.querySelectorAll("[data-k]").forEach(function(el){ el.textContent = t[el.getAttribute("data-k")]; });
+  }
+  paint();
+  new MutationObserver(paint).observe(document.documentElement, {attributes:true, attributeFilter:["lang"]});
+  bar.querySelectorAll("[data-v]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var v = b.getAttribute("data-v");
+      try{
+        localStorage.setItem("ss_consent", v);
+        if (v === "essential") localStorage.removeItem("ss_lang");
+      }catch(e){}
+      bar.classList.add("out");
+      setTimeout(function(){ if (bar.parentNode) bar.parentNode.removeChild(bar); }, 400);
+    });
+  });
+  document.body.appendChild(bar);
+  requestAnimationFrame(function(){ bar.classList.add("in"); });
+}
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initConsentBanner);
+else initConsentBanner();
+
+/* Camera "shutter + flash" on every .cta-btn press (styles in style.css).
+   Skipped for a form's submit button while the form is incomplete — the
+   form highlights what's missing instead. */
 document.addEventListener("click", function(e){
   var btn = e.target.closest && e.target.closest(".cta-btn");
   if (!btn) return;
+  if (btn.form && btn.type === "submit" && !btn.form.checkValidity()) return;
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   btn.classList.remove("snap");
   void btn.offsetWidth; /* restart the animation on repeat clicks */

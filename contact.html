@@ -84,7 +84,7 @@
     </div>
 
     <div class="contact-col">
-      <form class="quote-form" id="quoteForm" aria-labelledby="quoteHeading">
+      <form class="quote-form" id="quoteForm" aria-labelledby="quoteHeading" novalidate>
         <h2 id="quoteHeading" data-i18n="quoteTitle">Request a Quote</h2>
         <div class="row2">
           <div>
@@ -99,7 +99,7 @@
         <div class="row2">
           <div>
             <label for="qPhone" data-i18n="lblPhone">Phone</label>
-            <input id="qPhone" name="phone" type="tel" autocomplete="tel">
+            <input id="qPhone" name="phone" type="tel" required autocomplete="tel">
           </div>
           <div>
             <label for="qService" data-i18n="lblService">What do you need?</label>
@@ -116,11 +116,11 @@
         <div class="row2">
           <div>
             <label for="qDate" data-i18n="lblDate">Event Date</label>
-            <input id="qDate" name="date" type="date">
+            <input id="qDate" name="date" type="date" required>
           </div>
           <div>
             <label for="qLocation" data-i18n="lblLocation">Location</label>
-            <input id="qLocation" name="location" type="text">
+            <input id="qLocation" name="location" type="text" required>
           </div>
         </div>
         <div>
@@ -128,10 +128,13 @@
           <textarea id="qMessage" name="message"></textarea>
         </div>
         <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="consent-field">
+          <input id="qConsent" name="consent" type="checkbox" required>
+          <label for="qConsent" data-i18n-html="consent">I agree to the <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms &amp; Conditions</a>, and consent to Serrano Studio Photography contacting me about this request.</label>
+        </div>
         <div>
           <button type="submit" class="cta-btn" id="qSubmit" data-i18n="submitBtn">Send Quote Request</button>
           <p class="form-note" id="qStatus" role="status" aria-live="polite" data-i18n="formNote">Goes straight to the studio’s inbox — we’ll reply by email.</p>
-          <p class="form-note form-legal" data-i18n-html="consent">By sending, you agree to our <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms of Service</a>.</p>
         </div>
       </form>
     </div>
@@ -160,10 +163,17 @@
       <p class="foot-h" data-i18n="footFollow">Follow</p>
       <a href="https://www.instagram.com/fyjuansh/" target="_blank" rel="noopener">Instagram</a>
     </div>
+    <nav class="foot-col" aria-label="Legal">
+      <p class="foot-h" data-i18n="footLegal">Legal</p>
+      <a href="privacy.html" data-i18n="privacyLink">Privacy Policy</a>
+      <a href="terms.html" data-i18n="termsLink">Terms &amp; Conditions</a>
+      <a href="cookie-policy.html" data-i18n="cookieLink">Cookie Policy</a>
+      <a href="refund-policy.html" data-i18n="refundLink">Refund Policy</a>
+      <a href="accessibility.html" data-i18n="accessLink">Accessibility</a>
+    </nav>
   </div>
   <div class="foot-base">
     <span>© 2026 Serrano Studio Photography · Juan Serrano. <span data-i18n="footRights">All rights reserved.</span></span>
-    <span><a href="privacy.html" data-i18n="privacyLink">Privacy</a> · <a href="terms.html" data-i18n="termsLink">Terms</a></span>
   </div>
 </footer>
 
@@ -182,7 +192,6 @@ var chrome_UI = {
     ariaOpenMenu:"Open menu", ariaCloseMenu:"Close menu",
     ariaWordmark:"Juan Serrano — Serrano Studio Photography",
     backHome:"Home",
-    privacyLink:"Privacy", termsLink:"Terms",
     eyebrow:"Contact", h1:"Contact",
     lead:"Share the sport or event, date, and location — availability and next steps follow by email.",
     directTitle:"Direct Contact", supportTitle:"Client Support", areaTitle:"Service Area",
@@ -197,7 +206,9 @@ var chrome_UI = {
     sending:"Sending…",
     sent:"Thank you! Your request was sent — Juan will reply by email soon.",
     sendFail:"Sorry — that didn’t go through. Please try again, or call/WhatsApp (213) 904-3004.",
-    consent:"By sending, you agree to our <a href=\"privacy.html\">Privacy Policy</a> and <a href=\"terms.html\">Terms of Service</a>."
+    consent:"I agree to the <a href=\"privacy.html\">Privacy Policy</a> and <a href=\"terms.html\">Terms &amp; Conditions</a>, and consent to Serrano Studio Photography contacting me about this request.",
+    missing:"Please complete the fields marked in red.",
+    badEmail:"Please enter a valid email address."
   },
   es:{
     title:"Reserva un Fotógrafo en el Sur de California | Serrano Studio Photography",
@@ -208,7 +219,6 @@ var chrome_UI = {
     ariaOpenMenu:"Abrir menú", ariaCloseMenu:"Cerrar menú",
     ariaWordmark:"Juan Serrano — Fotografía de Serrano Studio",
     backHome:"Inicio",
-    privacyLink:"Privacidad", termsLink:"Términos",
     eyebrow:"Contacto", h1:"Contacto",
     lead:"Comparte el deporte o evento, la fecha y la ubicación — la disponibilidad y los siguientes pasos llegan por correo.",
     directTitle:"Contacto Directo", supportTitle:"Soporte al Cliente", areaTitle:"Área de Servicio",
@@ -223,7 +233,9 @@ var chrome_UI = {
     sending:"Enviando…",
     sent:"¡Gracias! Tu solicitud fue enviada — Juan te responderá por correo pronto.",
     sendFail:"Lo sentimos — no se pudo enviar. Inténtalo de nuevo, o llama/escribe por WhatsApp al (213) 904-3004.",
-    consent:"Al enviar, aceptas nuestra <a href=\"privacy.html\">Política de Privacidad</a> y los <a href=\"terms.html\">Términos de Servicio</a>."
+    consent:"Acepto la <a href=\"privacy.html\">Política de Privacidad</a> y los <a href=\"terms.html\">Términos y Condiciones</a>, y doy mi consentimiento para que Serrano Studio Photography me contacte sobre esta solicitud.",
+    missing:"Por favor completa los campos marcados en rojo.",
+    badEmail:"Por favor ingresa un correo válido."
   }
 };
 var chrome_ = initSiteChrome(chrome_UI);
@@ -242,6 +254,22 @@ quoteForm.addEventListener("submit", function(e){
   e.preventDefault();
   var f = quoteForm;
   if (f._honey.value) return; /* bot */
+  /* Mark every missing/invalid field in red and stop — no send, no camera effect. */
+  var bad = [].filter.call(f.querySelectorAll("[required]"), function(el){ return !el.checkValidity(); });
+  f.querySelectorAll(".field-error").forEach(function(w){ w.classList.remove("field-error"); });
+  if (bad.length){
+    bad.forEach(function(el){
+      el.setAttribute("aria-invalid", "true");
+      el.parentNode.classList.add("field-error");
+    });
+    qStatus.removeAttribute("data-i18n");
+    qStatus.classList.add("is-error");
+    var onlyEmail = bad.length === 1 && bad[0].type === "email" && bad[0].value;
+    qStatus.textContent = onlyEmail ? L().badEmail : L().missing;
+    bad[0].focus();
+    return;
+  }
+  qStatus.classList.remove("is-error");
   var service = f.service.value;
   var data = {
     name: f.name.value, email: f.email.value, phone: f.phone.value,
@@ -249,6 +277,7 @@ quoteForm.addEventListener("submit", function(e){
     message: f.message.value,
     _subject: "Quote request — " + service + " — " + f.name.value,
     _replyto: f.email.value,
+    consent: "Agreed to Privacy Policy & Terms on " + new Date().toISOString(),
     _template: "table",
     _captcha: "false"
   };
@@ -268,10 +297,22 @@ quoteForm.addEventListener("submit", function(e){
     })
     .catch(function(){
       /* Keep what they typed so they can retry — never bounce them to an email app. */
+      qStatus.classList.add("is-error");
       qStatus.textContent = L().sendFail;
     })
     .then(function(){ qSubmit.disabled = false; });
 });
+
+quoteForm.addEventListener("input", clearErr);
+quoteForm.addEventListener("change", clearErr);
+function clearErr(e){
+  var el = e.target;
+  if (el.hasAttribute("required") && el.checkValidity()){
+    el.removeAttribute("aria-invalid");
+    el.parentNode.classList.remove("field-error");
+    if (!quoteForm.querySelector(".field-error")){ qStatus.classList.remove("is-error"); qStatus.textContent = ""; }
+  }
+}
 
 if (location.hash === "#quote"){
   var qf = document.getElementById("quoteForm");

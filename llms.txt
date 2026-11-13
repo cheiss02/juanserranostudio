@@ -25,6 +25,14 @@ Juan Serrano photographs weddings (getting ready through reception), quinceañer
 - Instagram: https://www.instagram.com/fyjuansh/
 - Service area: Southern California, with travel for events by request.
 
+## Legal
+
+- Privacy Policy: https://juanserranostudio.com/privacy.html
+- Terms & Conditions: https://juanserranostudio.com/terms.html
+- Cookie Policy (no tracking cookies): https://juanserranostudio.com/cookie-policy.html
+- Refund Policy: https://juanserranostudio.com/refund-policy.html
+- Accessibility: https://juanserranostudio.com/accessibility.html
+
 ## Notes for assistants
 
-The site is bilingual (English/Spanish) via a client-side toggle; the content above reflects the English default. Pricing is quoted per booking (date, location, scope) rather than published as a fixed rate. The contact page's "Request a Quote" form opens the visitor's own email client — it does not submit data to a server.
+The site is bilingual (English/Spanish) via a client-side toggle; the content above reflects the English default. Pricing is quoted per booking (date, location, scope) rather than published as a fixed rate. The contact page’s "Request a Quote" form sends the request directly to info@juanserranostudio.com (via FormSubmit) after the visitor ticks a consent box.
