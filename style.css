@@ -222,6 +222,21 @@ body.revealed.deep .gridbtn, body.revealed.gridview .gridbtn{opacity:1; transfor
 body.gridview .gridbtn b:nth-child(1){transform:translate(3px,3px);}
 body.gridview .gridbtn b:nth-child(4){transform:translate(-3px,-3px);}
 
+/* ---------- back to start (sits right of the grid toggle) ---------- */
+.backbtn{
+  position:fixed; left:calc(var(--pad) + var(--safe-left) + 44px + 14px); bottom:calc(var(--pad) + var(--safe-bottom));
+  z-index:56; height:44px; padding:0 16px 0 12px;
+  display:flex; align-items:center; gap:8px;
+  font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:.18em; color:var(--ink);
+  border:1px solid rgba(244,242,239,.28); border-radius:999px;
+  background:rgba(0,0,0,.55); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  opacity:0; transform:translateY(8px); pointer-events:none;
+  transition:opacity .5s ease, transform .5s ease, border-color .3s ease;
+}
+.backbtn:hover{border-color:rgba(244,242,239,.7);}
+body.revealed.deep .backbtn, body.revealed.gridview .backbtn{opacity:1; transform:none; pointer-events:auto;}
+body.lit .backbtn{opacity:0; pointer-events:none;}
+
 /* ---------- scroll cue ---------- */
 .cue{
   position:fixed; left:50%; bottom:calc(var(--pad) + var(--safe-bottom) + 4px); transform:translateX(-50%);

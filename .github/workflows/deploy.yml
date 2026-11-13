@@ -30,7 +30,7 @@ jobs:
           mkdir _site
           cp *.html _site/
           cp style.css script.js nav.js CNAME _site/
-          cp robots.txt sitemap.xml llms.txt _site/
+          cp robots.txt sitemap.xml llms.txt favicon.ico _site/
           cp -r assets _site/assets
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3

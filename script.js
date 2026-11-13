@@ -72,8 +72,8 @@ function pt(p){ return p[currentLang] || p.en; }
 /* ---------- i18n ---------- */
 var UI = {
   en:{
-    title:"Juan Serrano — Capture the Moment Before It’s Gone",
-    metaDesc:"Sports photography by Juan Serrano of Serrano Studio Photography. From the first serve to the final buzzer, serving Southern California.",
+    title:"Serrano Studio Photography | Juan Serrano, Southern California Photographer",
+    metaDesc:"Juan Serrano of Serrano Studio Photography photographs quinceañeras, weddings, photoshoots and sports across Southern California, with photo booth add-ons. Book a session.",
     headlineWords:["Capture","the","Moment","Before","It’s","Gone."],
     menuLabel:"Menu",
     bio:"From the first serve to the final buzzer, Juan Serrano captures the split seconds that make every game worth remembering.",
@@ -85,12 +85,12 @@ var UI = {
     addrLine:"Serving Southern California",
     privacyLink:"Privacy", termsLink:"Terms",
     litClose:"Close",
-    ariaOpenMenu:"Open menu", ariaCloseMenu:"Close menu", ariaToggleGrid:"Toggle grid view",
+    ariaOpenMenu:"Open menu", ariaCloseMenu:"Close menu", ariaToggleGrid:"Toggle grid view", ariaBack:"Back to start", back:"Back",
     ariaWordmark:"Juan Serrano — Serrano Studio Photography"
   },
   es:{
-    title:"Juan Serrano — Captura el Momento Antes de Irse",
-    metaDesc:"Fotografía deportiva de Juan Serrano, de Serrano Studio Photography. Desde el primer saque hasta el silbatazo final, sirviendo al Sur de California.",
+    title:"Serrano Studio Photography | Juan Serrano, Fotógrafo en el Sur de California",
+    metaDesc:"Juan Serrano, de Serrano Studio Photography, fotografía quinceañeras, bodas, photoshoots y deportes en todo el Sur de California, con photobooth disponible. Reserva tu sesión.",
     headlineWords:["Captura","el","Momento","Antes","de","Irse."],
     menuLabel:"Menú",
     bio:"Desde el primer saque hasta el silbatazo final, Juan Serrano captura los instantes que hacen que cada partido valga la pena recordar.",
@@ -102,7 +102,7 @@ var UI = {
     addrLine:"Sirviendo al Sur de California",
     privacyLink:"Privacidad", termsLink:"Términos",
     litClose:"Cerrar",
-    ariaOpenMenu:"Abrir menú", ariaCloseMenu:"Cerrar menú", ariaToggleGrid:"Alternar vista de cuadrícula",
+    ariaOpenMenu:"Abrir menú", ariaCloseMenu:"Cerrar menú", ariaToggleGrid:"Alternar vista de cuadrícula", ariaBack:"Volver al inicio", back:"Volver",
     ariaWordmark:"Juan Serrano — Fotografía de Serrano Studio"
   }
 };
@@ -533,6 +533,8 @@ function applyLang(lang){
   });
 
   gridBtn.setAttribute("aria-label", t.ariaToggleGrid);
+  var bb = document.getElementById("backBtn");
+  if (bb) bb.setAttribute("aria-label", t.ariaBack);
   var wordmarkA = document.querySelector(".wordmark");
   if (wordmarkA) wordmarkA.setAttribute("aria-label", t.ariaWordmark);
 
@@ -570,6 +572,18 @@ function toggleGrid(force){
   document.body.classList.toggle("gridview", show);
 }
 gridBtn.addEventListener("click", function(){ toggleGrid(); });
+
+/* ---------- back to start ----------
+   Leaving the zoomed-in sphere means scrolling back up, which isn't
+   discoverable on a phone (the whole screen is the drag surface), so
+   give an explicit way back from both the deep sphere and the grid. */
+var backBtn = document.getElementById("backBtn");
+if (backBtn){
+  backBtn.addEventListener("click", function(){
+    toggleGrid(false);
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+}
 
 /* ---------- lightbox ---------- */
 var litToken = 0;
