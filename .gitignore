@@ -2,3 +2,4 @@
 Thumbs.db
 *.pem
 node_modules
+.claude/settings.local.json
