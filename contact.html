@@ -4,20 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Book a Photographer in Southern California | Serrano Studio Photography</title>
-<meta name="description" content="Request a quote from Juan Serrano for quinceañera, wedding, photoshoot, photo booth or sports photography. Email, phone or WhatsApp (562) 396-3548.">
+<meta name="description" content="Request a quote from Juan Serrano for quinceañera, wedding, photoshoot, photo booth or sports photography. Email, phone or WhatsApp (213) 904-3004.">
 <link rel="canonical" href="https://juanserranostudio.com/contact.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Serrano Studio Photography">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="es_US">
 <meta property="og:title" content="Book a Photographer in Southern California | Serrano Studio Photography">
-<meta property="og:description" content="Request a quote from Juan Serrano for quinceañera, wedding, photoshoot, photo booth or sports photography. Email, phone or WhatsApp (562) 396-3548.">
+<meta property="og:description" content="Request a quote from Juan Serrano for quinceañera, wedding, photoshoot, photo booth or sports photography. Email, phone or WhatsApp (213) 904-3004.">
 <meta property="og:url" content="https://juanserranostudio.com/contact.html">
 <meta property="og:image" content="https://juanserranostudio.com/assets/share.jpg">
 <meta property="og:image:alt" content="Serrano Studio Photography — Juan Serrano">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Book a Photographer in Southern California | Serrano Studio Photography">
-<meta name="twitter:description" content="Request a quote from Juan Serrano for quinceañera, wedding, photoshoot, photo booth or sports photography. Email, phone or WhatsApp (562) 396-3548.">
+<meta name="twitter:description" content="Request a quote from Juan Serrano for quinceañera, wedding, photoshoot, photo booth or sports photography. Email, phone or WhatsApp (213) 904-3004.">
 <meta name="twitter:image" content="https://juanserranostudio.com/assets/share.jpg">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="assets/favicon-48.png">
@@ -59,7 +59,7 @@
       <div class="contact-block">
         <h2 data-i18n="directTitle">Direct Contact</h2>
         <p><a class="plain" href="mailto:info@juanserranostudio.com">info@juanserranostudio.com</a></p>
-        <p><a class="plain" href="tel:+15623963548">(562) 396-3548</a></p>
+        <p><a class="plain" href="tel:+12139043004">(213) 904-3004</a></p>
       </div>
       <div class="contact-block">
         <h2 data-i18n="supportTitle">Client Support</h2>
@@ -72,7 +72,7 @@
       <div class="contact-block">
         <h2 data-i18n="quickTitle">Quick Contact</h2>
         <div class="cta-row">
-          <a class="cta-btn" id="waBtn" href="https://wa.me/15623963548" target="_blank" rel="noopener" data-i18n="waBtn">WhatsApp</a>
+          <a class="cta-btn" id="waBtn" href="https://wa.me/12139043004" target="_blank" rel="noopener" data-i18n="waBtn">WhatsApp</a>
           <a class="cta-btn ghost" href="mailto:info@juanserranostudio.com" data-i18n="ctaEmail">Email the Studio</a>
         </div>
         <div class="social-row">
@@ -104,11 +104,12 @@
           <div>
             <label for="qService" data-i18n="lblService">What do you need?</label>
             <select id="qService" name="service">
-              <option data-i18n="optSports">Sports</option>
-              <option data-i18n="optPortrait">Portrait</option>
-              <option data-i18n="optWeddings">Wedding</option>
-              <option data-i18n="optQuince">Quinceañera</option>
-              <option data-i18n="optOther">Something else</option>
+              <option value="Quinceañera" data-i18n="optQuince">Quinceañera</option>
+              <option value="Wedding" data-i18n="optWeddings">Wedding</option>
+              <option value="Photo Booth" data-i18n="optBooth">Photo Booth</option>
+              <option value="Photoshoot" data-i18n="optPortrait">Photoshoot</option>
+              <option value="Sports" data-i18n="optSports">Sports</option>
+              <option value="Something else" data-i18n="optOther">Something else</option>
             </select>
           </div>
         </div>
@@ -126,9 +127,10 @@
           <label for="qMessage" data-i18n="lblMessage">Project Details</label>
           <textarea id="qMessage" name="message"></textarea>
         </div>
+        <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div>
-          <button type="submit" class="cta-btn" data-i18n="submitBtn">Send Quote Request</button>
-          <p class="form-note" data-i18n="formNote">Opens your email app with these details filled in — nothing is sent from this page.</p>
+          <button type="submit" class="cta-btn" id="qSubmit" data-i18n="submitBtn">Send Quote Request</button>
+          <p class="form-note" id="qStatus" role="status" aria-live="polite" data-i18n="formNote">Goes straight to the studio’s inbox — we’ll reply by email.</p>
         </div>
       </form>
     </div>
@@ -150,8 +152,8 @@
     <div class="foot-col">
       <p class="foot-h" data-i18n="footContact">Contact</p>
       <a href="mailto:info@juanserranostudio.com">info@juanserranostudio.com</a>
-      <a href="tel:+15623963548">(562) 396-3548</a>
-      <a href="https://wa.me/15623963548" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="tel:+12139043004">(213) 904-3004</a>
+      <a href="https://wa.me/12139043004" target="_blank" rel="noopener">WhatsApp</a>
     </div>
     <div class="foot-col">
       <p class="foot-h" data-i18n="footFollow">Follow</p>
@@ -169,10 +171,10 @@
 
 <script src="nav.js"></script>
 <script>
-var chrome_ = initSiteChrome({
+var chrome_UI = {
   en:{
     title:"Book a Photographer in Southern California | Serrano Studio Photography",
-    metaDesc:"Request a quote from Juan Serrano for quinceañera, wedding, photoshoot, photo booth or sports photography. Email, phone or WhatsApp (562) 396-3548.",
+    metaDesc:"Request a quote from Juan Serrano for quinceañera, wedding, photoshoot, photo booth or sports photography. Email, phone or WhatsApp (213) 904-3004.",
     menuLabel:"Menu",
     navPortfolio:"Portfolio", navServices:"Services", navAbout:"About", navContact:"Contact",
     addrLine:"Serving Southern California",
@@ -188,13 +190,16 @@ var chrome_ = initSiteChrome({
     quoteTitle:"Request a Quote",
     lblName:"Name", lblEmail:"Email", lblPhone:"Phone", lblService:"What do you need?",
     lblDate:"Event Date", lblLocation:"Location", lblMessage:"Project Details",
-    optSports:"Sports", optPortrait:"Portrait", optWeddings:"Wedding", optQuince:"Quinceañera", optOther:"Something else",
+    optSports:"Sports", optPortrait:"Photoshoot", optWeddings:"Wedding", optQuince:"Quinceañera", optBooth:"Photo Booth", optOther:"Something else",
     submitBtn:"Send Quote Request",
-    formNote:"Opens your email app with these details filled in — nothing is sent from this page."
+    formNote:"Goes straight to the studio’s inbox — we’ll reply by email.",
+    sending:"Sending…",
+    sent:"Thank you! Your request was sent — Juan will reply by email soon.",
+    sendFail:"Couldn’t send from the page — opening your email app instead."
   },
   es:{
     title:"Reserva un Fotógrafo en el Sur de California | Serrano Studio Photography",
-    metaDesc:"Solicita una cotización a Juan Serrano para quinceañeras, bodas, photoshoots, photobooth o deportes. Correo, teléfono o WhatsApp (562) 396-3548.",
+    metaDesc:"Solicita una cotización a Juan Serrano para quinceañeras, bodas, photoshoots, photobooth o deportes. Correo, teléfono o WhatsApp (213) 904-3004.",
     menuLabel:"Menú",
     navPortfolio:"Portafolio", navServices:"Servicios", navAbout:"Acerca de", navContact:"Contacto",
     addrLine:"Sirviendo al Sur de California",
@@ -210,29 +215,65 @@ var chrome_ = initSiteChrome({
     quoteTitle:"Solicitar Cotización",
     lblName:"Nombre", lblEmail:"Correo", lblPhone:"Teléfono", lblService:"¿Qué necesitas?",
     lblDate:"Fecha del Evento", lblLocation:"Ubicación", lblMessage:"Detalles del Proyecto",
-    optSports:"Deportes", optPortrait:"Retrato", optWeddings:"Boda", optQuince:"Quinceañera", optOther:"Algo más",
+    optSports:"Deportes", optPortrait:"Photoshoot", optWeddings:"Boda", optQuince:"Quinceañera", optBooth:"Photobooth", optOther:"Algo más",
     submitBtn:"Enviar Solicitud",
-    formNote:"Abre tu aplicación de correo con estos datos ya completados — esta página no envía nada por sí misma."
+    formNote:"Llega directo al correo del estudio — te responderemos por email.",
+    sending:"Enviando…",
+    sent:"¡Gracias! Tu solicitud fue enviada — Juan te responderá por correo pronto.",
+    sendFail:"No se pudo enviar desde la página — abriendo tu aplicación de correo."
   }
-});
+};
+var chrome_ = initSiteChrome(chrome_UI);
 
+/* Quote form → FormSubmit.co (free form-to-email relay, no backend
+   needed). Submissions arrive at info@juanserranostudio.com. The very
+   first submission triggers a one-time activation email to that inbox —
+   click "Activate" in it or nothing is delivered. If the request fails
+   for any reason, fall back to opening the visitor's email app. */
+var FORM_ENDPOINT = "https://formsubmit.co/ajax/info@juanserranostudio.com";
 var quoteForm = document.getElementById("quoteForm");
+var qSubmit = document.getElementById("qSubmit");
+var qStatus = document.getElementById("qStatus");
+function L(){ var l = document.documentElement.lang === "es" ? "es" : "en"; return chrome_UI[l]; }
 quoteForm.addEventListener("submit", function(e){
   e.preventDefault();
   var f = quoteForm;
-  var lines = [
-    "Name: " + f.name.value,
-    "Email: " + f.email.value,
-    "Phone: " + f.phone.value,
-    "Service: " + f.service.options[f.service.selectedIndex].text,
-    "Event date: " + f.date.value,
-    "Location: " + f.location.value,
-    "",
-    f.message.value
-  ];
-  var subject = encodeURIComponent("Quote request — " + f.service.options[f.service.selectedIndex].text);
-  var body = encodeURIComponent(lines.join("\n"));
-  window.location.href = "mailto:info@juanserranostudio.com?subject=" + subject + "&body=" + body;
+  if (f._honey.value) return; /* bot */
+  var service = f.service.value;
+  var data = {
+    name: f.name.value, email: f.email.value, phone: f.phone.value,
+    service: service, event_date: f.date.value, location: f.location.value,
+    message: f.message.value,
+    _subject: "Quote request — " + service + " — " + f.name.value,
+    _replyto: f.email.value,
+    _template: "table",
+    _captcha: "false"
+  };
+  function mailtoFallback(){
+    var lines = ["Name: " + data.name, "Email: " + data.email, "Phone: " + data.phone,
+      "Service: " + service, "Event date: " + data.event_date, "Location: " + data.location, "", data.message];
+    window.location.href = "mailto:info@juanserranostudio.com?subject=" +
+      encodeURIComponent(data._subject) + "&body=" + encodeURIComponent(lines.join("\n"));
+  }
+  qSubmit.disabled = true;
+  qStatus.removeAttribute("data-i18n");
+  qStatus.textContent = L().sending;
+  fetch(FORM_ENDPOINT, {
+    method: "POST",
+    headers: {"Content-Type": "application/json", "Accept": "application/json"},
+    body: JSON.stringify(data)
+  }).then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
+    .then(function(res){
+      if (!res.ok || String(res.j.success) !== "true") throw new Error(res.j.message || "send failed");
+      quoteForm.reset();
+      quoteForm.classList.add("sent");
+      qStatus.textContent = L().sent;
+    })
+    .catch(function(){
+      qStatus.textContent = L().sendFail;
+      setTimeout(mailtoFallback, 900);
+    })
+    .then(function(){ qSubmit.disabled = false; });
 });
 
 if (location.hash === "#quote"){

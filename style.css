@@ -195,7 +195,7 @@ body.menuopen .bars i:last-child{transform:rotate(-45deg);}
   transition:opacity .4s ease, transform .4s ease;
 }
 .bio .who{display:flex; align-items:center; gap:14px; margin-bottom:14px;}
-.bio img#avatar{width:52px; height:52px; display:block; background:#000; border-radius:3px; object-fit:cover; object-position:50% 20%; filter:grayscale(.15);}
+.bio img#avatar{width:72px; height:72px; display:block; background:#000; border-radius:3px; object-fit:cover; object-position:50% 20%; filter:grayscale(.15);}
 .bio b{font-family:var(--serif); font-weight:400; font-size:19px; letter-spacing:.01em;}
 .bio p{font-size:12.5px; line-height:1.62; color:rgba(244,242,239,.72); margin:0;}
 body.deep .bio, body.gridview .bio, body.lit .bio{opacity:0; transform:translateY(10px); pointer-events:none;}
@@ -446,7 +446,7 @@ body.lit .plate{transform:scale(1); opacity:1;}
 
 @media (max-width:640px){
   :root{ --hw:min(84vw, 360px); --pad:clamp(12px, 4vw, 18px); }
-  .bio img#avatar{width:42px; height:42px;}
+  .bio img#avatar{width:56px; height:56px;}
   .bio b{font-size:17px;}
   .bio p{font-size:11.5px; line-height:1.55;}
   .cue{display:none;}
@@ -524,9 +524,10 @@ body.content{overflow-x:hidden; overflow-y:auto; height:auto; min-height:100vh; 
   padding:calc(var(--pad) * 7 + var(--safe-top)) calc(var(--pad) + var(--safe-right)) calc(var(--pad) * 6 + var(--safe-bottom)) calc(var(--pad) + var(--safe-left));
 }
 .about-portrait img{
-  width:180px; height:180px; object-fit:cover; object-position:50% 20%;
+  width:min(280px, 72vw); aspect-ratio:4 / 5; height:auto; object-fit:cover; object-position:50% 20%;
   border-radius:4px; margin-bottom:26px; display:block;
 }
+.quote-form .hp{position:absolute; left:-9999px; width:1px; height:1px; opacity:0;}
 .about-subhead{font-family:var(--serif); font-weight:400; font-size:clamp(20px, 2.2vw, 26px); margin:0 0 18px;}
 
 .back-home{

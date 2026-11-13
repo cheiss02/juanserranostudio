@@ -67,6 +67,16 @@ var photos = [
     es:{title:"Ojos en el Balón", place:"Sur de California", note:"A toda velocidad, con la mirada fija en el balón en el aire — el instante antes del contacto."}}
 ];
 var N = photos.length;
+/* Real width/height ratio of each file in assets/photos — sphere cards
+   take the photo's own shape, so nothing gets cropped (portrait shots
+   used to be forced into 3:2 landscape cards and lost heads/feet).
+   Add an entry here when a new photo is added. */
+var ASPECT = {"01":1.33,"02":1.47,"03":1.5,"04":1.5,"05":1.5,"06":1.5,"07":1.5,"08":1.41,
+  "09":0.67,"10":0.67,"11":0.67,"12":0.53,"13":0.67,"14":1.5,"15":1.5,"16":1.5,"17":1.5,"18":1.5};
+photos.forEach(function(p){
+  p.ar = ASPECT[p.id] || 1.5;
+  p.tall = p.ar < 1;
+});
 function pt(p){ return p[currentLang] || p.en; }
 
 /* ---------- i18n ---------- */
@@ -253,7 +263,7 @@ photos.forEach(function(p, i){
   var z = Math.sin(theta) * rad;
   var lat = Math.asin(y) * 180/Math.PI;
   var lon = Math.atan2(x,z) * 180/Math.PI;
-  cards.push({idx:i, ux:x, uy:y, uz:z, lat:lat, lon:lon, tall:p.tall, photo:p, thumbSrc:null, lastOpacity:null, lastDim:null});
+  cards.push({idx:i, ux:x, uy:y, uz:z, lat:lat, lon:lon, tall:p.tall, ar:p.ar, photo:p, thumbSrc:null, lastOpacity:null, lastDim:null});
 });
 
 /* build sphere card DOM */
@@ -316,7 +326,7 @@ photos.forEach(function(p, i){
     splashReport();
   });
 });
-decodeAvatar("assets/avatar.jpeg", 160).then(function(src){
+decodeAvatar("assets/avatar.jpeg", 240).then(function(src){
   avatarImg.src = src;
 });
 
@@ -330,10 +340,34 @@ function computeLayout(){
   else if (w<=640){ hr=0.42; wr=0.52; floor=120; scale=0.46; }
   else { hr=0.46; wr=0.58; floor=155; scale=0.47; }
   var r = Math.max(floor, Math.min(480, h*hr, w*wr));
-  var cardW = Math.round(Math.max(72, r*scale));
   var p;
   if (w<=380) p=620; else if (w<=640) p=760; else if (w<=900) p=920; else p=1150;
+  /* Shrink the sphere until every card — including the near ones that
+     perspective magnifies, and the extra zoom when scrolled in — stays
+     inside the screen with a gutter, so no photo is cut by the edge. */
+  var gutter = w<=640 ? 14 : 28;
+  var halfW = w/2 - gutter, halfH = h/2 - gutter;
+  for (var tries=0; tries<60; tries++){
+    var cwTry = Math.max(64, r*scale);
+    if (sphereExtent(r, p, cwTry/2) <= Math.min(halfW, halfH)) break;
+    r *= 0.97;
+  }
+  var cardW = Math.round(Math.max(64, r*scale));
   return {R:r, cw:cardW, persp:p};
+}
+/* Largest on-screen distance from the sphere's center reached by a card's
+   outer edge, over all positions around the sphere (cards face outward,
+   so their half-width shrinks with cos as they turn edge-on). */
+function sphereExtent(r, p, halfCard){
+  var camZMax = Math.min(64, r*0.12);
+  var maxE = 0;
+  for (var a=0; a<=90; a+=3){
+    var t = a*Math.PI/180;
+    var z = r*Math.cos(t) + camZMax;
+    var e = (r*Math.sin(t) + halfCard*Math.cos(t)) * p / Math.max(1, p - z);
+    if (e > maxE) maxE = e;
+  }
+  return maxE;
 }
 function layoutSphere(force){
   var w = window.innerWidth, h = window.innerHeight;
@@ -347,16 +381,15 @@ function layoutSphere(force){
   cards.forEach(function(c){
     var tx = c.ux*R, ty = -c.uy*R, tz = c.uz*R;
     c.el.style.transform = "translate3d(" + tx + "px," + ty + "px," + tz + "px) rotateY(" + c.lon + "deg) rotateX(" + c.lat + "deg)";
-    c.el.style.width = cw + "px";
-    if (c.tall){
-      c.el.style.height = (cw*1.25) + "px";
-      c.el.style.marginLeft = (-cw/2) + "px";
-      c.el.style.marginTop = (-cw*0.625) + "px";
-    } else {
-      c.el.style.height = (cw/1.5) + "px";
-      c.el.style.marginLeft = (-cw/2) + "px";
-      c.el.style.marginTop = (-cw/3) + "px";
-    }
+    /* Same area as a cw x cw/1.5 landscape card, in the photo's own
+       shape; portrait cards are capped at cw tall so they don't tower. */
+    var area = cw * cw / 1.5;
+    var ch = Math.min(cw, Math.sqrt(area / c.ar));
+    var cwi = ch * c.ar;
+    c.el.style.width = cwi + "px";
+    c.el.style.height = ch + "px";
+    c.el.style.marginLeft = (-cwi/2) + "px";
+    c.el.style.marginTop = (-ch/2) + "px";
   });
 }
 layoutSphere(true);
