@@ -15,3 +15,4 @@
 - `CNAME` at the repo root configures the `juanserranostudio.com` custom domain for GitHub Pages; keep it unless the domain changes. The site is live from `main`; confirm with the user before pushing to `main` or changing DNS/Pages settings.
 - Do not add server-only secrets to client code — these are static pages with no backend.
 - `.claude/skills/` holds installed Claude Code skills (impeccable, transitions-dev/-polish/-ui-generation, gsap-*, make-interfaces-feel-better, motionsites-web-builder) for UI/motion polish work on this project. `.claude/settings.local.json` is personal-local and gitignored — don't commit it.
+- Every page links `style.css?v=…`, `nav.js?v=…` (and `index.html` `script.js?v=…`) with a shared timestamp version. GitHub Pages serves them with `max-age=600` and iOS Safari caches longer, so **bump the `?v=` value on all pages whenever CSS/JS changes** or phones keep showing the old styles.
