@@ -129,26 +129,25 @@ function initGallery(opts){
 
   function textFor(p){ return p[getStoredLang()] || p.en; }
 
+  /* Figures are pre-rendered as static HTML (real <img>/<figcaption>,
+     English by default) so crawlers that don't execute JS — many AI
+     crawlers included — still see every photo and caption. This just
+     enhances the existing markup: wires up interactivity and swaps
+     text on language change. It does not create the DOM. */
+  var existing = container.querySelectorAll("figure");
   opts.photos.forEach(function(p, i){
-    var fig = document.createElement("figure");
+    var fig = existing[i];
+    if (!fig) return;
     fig.setAttribute("tabindex", "0");
     fig.setAttribute("role", "button");
     fig.setAttribute("data-idx", i);
-    var img = document.createElement("img");
-    img.src = opts.folder + "/" + p.id + ".jpg";
-    img.alt = textFor(p).title;
-    fig.appendChild(img);
-    if (opts.captions !== false){
-      var cap = document.createElement("figcaption");
-      cap.textContent = textFor(p).title;
-      fig.appendChild(cap);
-    }
+    var img = fig.querySelector("img");
+    var cap = fig.querySelector("figcaption");
     fig.addEventListener("click", function(){ open(i); });
     fig.addEventListener("keydown", function(e){
       if (e.key === "Enter" || e.key === " "){ e.preventDefault(); open(i); }
     });
-    container.appendChild(fig);
-    figs.push({el:fig, img:img, cap:fig.querySelector("figcaption")});
+    figs.push({el:fig, img:img, cap:cap});
   });
 
   function open(i){

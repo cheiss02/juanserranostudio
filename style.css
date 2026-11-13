@@ -34,6 +34,14 @@ body{
 }
 body.locked{overflow:hidden;height:100vh;height:100dvh;}
 img{display:block;max-width:100%;}
+
+/* Consistent depth on photographic content (not logo marks/icons):
+   a subtle inset hairline, white since this site is dark-only. */
+.card img, #grid img, .gallery-rows img, .shot img,
+.service-photo img, .cat-tile img, .about-portrait img, .bio img#avatar{
+  outline:1px solid oklch(1 0 0 / 0.1);
+  outline-offset:-1px;
+}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;padding:0;}
 a{-webkit-tap-highlight-color:transparent;}
 
@@ -314,10 +322,18 @@ body.lit .plate{transform:scale(1); opacity:1;}
 .navsep{width:40px; height:1px; background:rgba(244,242,239,.28); margin:clamp(10px, 1.6vw, 18px) 0;}
 .langswitch{display:flex; align-items:center; gap:10px;}
 .langbtn{
+  position:relative;
   font-family:var(--sans); font-weight:500;
   font-size:13px; letter-spacing:.1em;
   color:rgba(244,242,239,.45);
   transition:color .3s ease;
+}
+/* expanded hit area without affecting visual size/layout; kept narrow
+   horizontally since EN/ES sit close together (collision rule) */
+.langbtn::after{
+  content:''; position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:34px; height:40px;
 }
 .langbtn[aria-pressed="true"]{color:var(--ink);}
 .langbtn:hover{color:var(--ink);}
@@ -497,7 +513,8 @@ body.content{overflow-x:hidden; overflow-y:auto; height:auto; min-height:100vh; 
 .back-home{
   display:inline-flex; align-items:center; gap:7px;
   font-size:11px; letter-spacing:.14em; text-transform:uppercase;
-  color:rgba(244,242,239,.5); text-decoration:none; margin-bottom:30px;
+  color:rgba(244,242,239,.5); text-decoration:none;
+  padding:12px 4px; margin:-12px 0 18px -4px;
   transition:color .3s ease, gap .3s ease;
 }
 .back-home::before{content:'←'; font-size:13px; line-height:1;}
@@ -638,7 +655,12 @@ body.content{overflow-x:hidden; overflow-y:auto; height:auto; min-height:100vh; 
 .gallery-note{max-width:620px; margin:36px auto 0; font-size:13px; line-height:1.6; color:rgba(244,242,239,.5); text-align:center;}
 
 @media (max-width:640px){
-  .content-page{padding-top:calc(var(--pad) * 5 + var(--safe-top));}
+  /* header wraps to 2 rows (logo + nav) below this width; use a flat
+     buffer sized to its largely-fixed height (logo floor + row-gap),
+     not a pure --pad multiplier, since --pad shrinks faster than the
+     header's floor sizes do and a pure multiplier under-clears it. */
+  .content-page{padding-top:calc(var(--pad) * 5 + 56px + var(--safe-top));}
+  .gallery-page{padding-top:calc(var(--pad) * 5 + 56px + var(--safe-top));}
   .contact-grid{grid-template-columns:1fr; gap:36px;}
   .quote-form .row2{grid-template-columns:1fr;}
 }
