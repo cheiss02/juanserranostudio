@@ -58,7 +58,14 @@ a{-webkit-tap-highlight-color:transparent;}
   perspective:var(--persp); perspective-origin:50% 50%;
   overflow:hidden; touch-action:none;
 }
-@media (pointer:coarse){ #stage{touch-action:pan-y;} }
+/* Touch: the sphere owns every swipe direction (no page scroll from the stage).
+   Once someone starts turning it, the bio steps aside and the grid button
+   shows — on phones the scroll-to-zoom step that normally reveals it is gone. */
+@media (pointer:coarse){
+  #stage{touch-action:none;}
+  body.touched .bio, body.touched .colophon, body.touched .cue{opacity:0; transform:translateY(10px); pointer-events:none;}
+  body.revealed.touched .gridbtn{opacity:1; transform:none; pointer-events:auto;}
+}
 
 #world{
   position:absolute; top:50%; left:50%;

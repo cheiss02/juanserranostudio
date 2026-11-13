@@ -379,7 +379,7 @@ function rotPoint(x,y,z,sxDeg,syDeg){
 /* ---------- camera state ---------- */
 var spin = 0, tilt = -4, camZ = 0;
 var dragX = 0, dragY = 0, velX = 0, velY = 0;
-var pitchLimit = 32;
+var pitchLimit = 70; /* how far it tilts up/down (was 32 — felt stuck vertically) */
 var focused = -1;
 var isDragging = false;
 
@@ -441,13 +441,15 @@ stage.addEventListener("pointerdown", function(e){
   dragState = {
     id:e.pointerId, startX:e.clientX, startY:e.clientY,
     lastX:e.clientX, lastY:e.clientY,
-    type:e.pointerType, decided:e.pointerType!=="touch",
+    type:e.pointerType,
     captured:false, moved:0, cardEl:cardEl
   };
-  if (dragState.decided){
-    try{ stage.setPointerCapture(e.pointerId); dragState.captured = true; }catch(err){}
-    isDragging = true; velX = 0; velY = 0;
-  }
+  /* Every pointer — touch included — rotates the sphere in any direction.
+     (Touch used to hand vertical swipes to page scrolling, so on phones
+     the ball could only spin sideways.) */
+  try{ stage.setPointerCapture(e.pointerId); dragState.captured = true; }catch(err){}
+  isDragging = true; velX = 0; velY = 0;
+  if (e.pointerType === "touch") document.body.classList.add("touched");
 });
 window.addEventListener("pointermove", function(e){
   if (!dragState || e.pointerId !== dragState.id) return;
@@ -457,27 +459,14 @@ window.addEventListener("pointermove", function(e){
   var totalDy = e.clientY - dragState.startY;
   dragState.moved = Math.max(dragState.moved, Math.hypot(totalDx, totalDy));
 
-  if (!dragState.decided){
-    var total = Math.hypot(totalDx, totalDy);
-    if (total > 10){
-      if (Math.abs(totalDy) > Math.abs(totalDx) * 1.15){
-        dragState = null;
-        return;
-      } else {
-        dragState.decided = true;
-        try{ stage.setPointerCapture(e.pointerId); dragState.captured = true; }catch(err){}
-        isDragging = true; velX = 0; velY = 0;
-      }
-    } else {
-      return;
-    }
-  }
-
-  dragX += dx * 0.13;
-  dragY += dy * 0.13;
+  /* Fingers cover less distance than a mouse on a small screen, so touch
+     turns the ball faster per pixel. */
+  var k = dragState.type === "touch" ? 0.24 : 0.13;
+  dragX += dx * k;
+  dragY += dy * k;
   clampPitch();
-  velX = dx * 0.13;
-  velY = dy * 0.13;
+  velX = dx * k;
+  velY = dy * k;
   dragState.lastX = e.clientX;
   dragState.lastY = e.clientY;
 });
