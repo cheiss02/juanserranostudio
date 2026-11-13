@@ -524,9 +524,9 @@ body.content{overflow-x:hidden; overflow-y:auto; height:auto; min-height:100vh; 
 .back-home::before{content:'←'; font-size:13px; line-height:1;}
 .back-home:hover{color:var(--ink); gap:10px;}
 
-.content-page .eyebrow{font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:rgba(244,242,239,.42); margin:0 0 18px;}
-.content-page h1{font-family:var(--serif); font-weight:400; font-size:clamp(40px, 7vw, 76px); line-height:1.04; letter-spacing:-.01em; margin:0 0 22px;}
-.content-page .lead{font-family:var(--serif); font-style:italic; font-size:clamp(18px, 2.2vw, 24px); line-height:1.5; color:rgba(244,242,239,.86); max-width:620px; margin:0 0 48px;}
+.content-page .eyebrow, .gallery-head .eyebrow{font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:rgba(244,242,239,.42); margin:0 0 18px;}
+.content-page h1, .gallery-head h1{font-family:var(--serif); font-weight:400; font-size:clamp(40px, 7vw, 76px); line-height:1.04; letter-spacing:-.01em; margin:0 0 22px;}
+.content-page .lead, .gallery-head .lead{font-family:var(--serif); font-style:italic; font-size:clamp(18px, 2.2vw, 24px); line-height:1.5; color:rgba(244,242,239,.86); max-width:620px; margin:0 0 48px;}
 .content-page .body-copy p{font-size:15px; line-height:1.78; color:rgba(244,242,239,.78); max-width:620px; margin:0 0 20px;}
 .content-page .approach{list-style:none; margin:28px 0; padding:0; display:grid; gap:10px; max-width:560px;}
 .content-page .approach li{font-size:14px; line-height:1.6; color:rgba(244,242,239,.78); padding-left:20px; position:relative;}
@@ -615,8 +615,6 @@ body.content{overflow-x:hidden; overflow-y:auto; height:auto; min-height:100vh; 
 .quote-form button[type="submit"]{justify-self:start; border:none;}
 .quote-form .form-note{font-size:12px; color:rgba(244,242,239,.45); margin-top:4px;}
 
-.content-page .foot{margin-top:70px; padding-top:22px; border-top:1px solid var(--line); font-size:12.5px; color:rgba(244,242,239,.5);}
-.content-page .foot a{color:rgba(244,242,239,.5);}
 
 /* ---------- portfolio category hub ---------- */
 .cat-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:clamp(16px,2.4vw,24px); margin-top:40px;}
@@ -632,9 +630,9 @@ body.content{overflow-x:hidden; overflow-y:auto; height:auto; min-height:100vh; 
 .cat-tile .label h2{font-family:var(--serif); font-weight:400; font-size:clamp(22px,2.6vw,30px); margin:4px 0 0; color:#fff;}
 
 /* ---------- simple gallery pages (quinceañera / wedding) ---------- */
-.gallery-page{position:relative; z-index:5; padding:calc(var(--pad) * 7 + var(--safe-top)) var(--pad) calc(var(--pad) * 5 + var(--safe-bottom));}
-.gallery-page .gallery-head{max-width:860px; margin:0 auto clamp(30px,4vw,54px);}
-.gallery-rows{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:clamp(10px,1.4vw,20px); max-width:1680px; margin:0 auto;}
+.gallery-page{position:relative; z-index:5; padding:calc(var(--pad) * 7 + var(--safe-top)) var(--pad) clamp(48px,6vw,80px);}
+.gallery-page .gallery-head{max-width:1280px; margin:0 auto clamp(30px,4vw,54px);}
+.gallery-rows{display:grid; grid-template-columns:repeat(auto-fill, minmax(340px,1fr)); gap:clamp(10px,1.4vw,20px); max-width:1280px; margin:0 auto;}
 .gallery-rows figure{
   position:relative; aspect-ratio:3/2; border-radius:3px; background:#0b0b0b;
   overflow:hidden; margin:0; cursor:pointer;
@@ -675,4 +673,52 @@ body.content{overflow-x:hidden; overflow-y:auto; height:auto; min-height:100vh; 
     animation-iteration-count:1 !important;
     transition-duration:.14s !important;
   }
+}
+
+/* ---------- site footer (all secondary pages) ---------- */
+.site-footer{
+  position:relative; z-index:5;
+  max-width:calc(1280px + 2 * var(--pad)); margin:0 auto;
+  padding:0 calc(var(--pad) + var(--safe-right)) calc(var(--pad) * 1.6 + var(--safe-bottom)) calc(var(--pad) + var(--safe-left));
+  color:rgba(244,242,239,.62); font-size:13.5px; line-height:1.6;
+}
+.foot-cta{
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:20px;
+  padding:clamp(36px,5vw,64px) 0; border-top:1px solid var(--line);
+}
+.foot-cta-line{font-family:var(--serif); font-size:clamp(26px,3.4vw,42px); line-height:1.1; color:var(--ink); margin:0;}
+.foot-grid{
+  display:grid; grid-template-columns:minmax(0,1.6fr) repeat(3, minmax(0,1fr));
+  gap:clamp(28px,4vw,56px); padding:clamp(36px,4.4vw,56px) 0; border-top:1px solid var(--line);
+}
+.foot-logo img{height:56px; width:auto; margin-bottom:16px;}
+.foot-brand p{margin:0; max-width:320px;}
+.foot-col{display:flex; flex-direction:column; align-items:flex-start; gap:6px;}
+.foot-h{font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:rgba(244,242,239,.4); margin:0 0 8px;}
+.site-footer a{color:rgba(244,242,239,.78); text-decoration:none; transition:color .25s ease;}
+.site-footer a:hover, .site-footer a:focus-visible{color:var(--ink);}
+.foot-col a{padding:4px 0;}
+.foot-base{
+  display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
+  padding-top:22px; border-top:1px solid var(--line);
+  font-size:12px; color:rgba(244,242,239,.42);
+}
+.site-footer .cta-btn{color:#000;}
+.site-footer .cta-btn:hover{color:#000;}
+@media (max-width:768px){
+  .foot-grid{grid-template-columns:1fr 1fr;}
+  .foot-brand{grid-column:1 / -1;}
+}
+@media (max-width:420px){
+  .foot-grid{grid-template-columns:1fr;}
+}
+
+/* Phones: keep the nav on one row (it was spilling EN/ES onto a third
+   line and crowding the page content under the fixed header). */
+@media (max-width:420px){
+  .site-nav, header.chrome .site-nav{gap:12px; flex-wrap:nowrap;}
+  .site-nav a, header.chrome .site-nav a{font-size:11px; letter-spacing:.06em;}
+  .site-nav .navsep{display:none;}
+  .langswitch{gap:6px;}
+  .langbtn, .langdiv{font-size:11px;}
 }
