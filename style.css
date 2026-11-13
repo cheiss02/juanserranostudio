@@ -601,6 +601,51 @@ body.content{overflow-x:hidden; overflow-y:auto; height:auto; min-height:100vh; 
 .cta-btn.ghost{color:var(--ink); background:transparent; border:1px solid rgba(244,242,239,.4);}
 .cta-btn.ghost:hover{border-color:#fff; background:rgba(244,242,239,.06);}
 
+/* ---------- camera effect on buttons ----------
+   Hover: viewfinder focus brackets snap in around the button and blink
+   twice, like autofocus locking on. Click: the shutter squeezes the
+   button and a flash pops (nav.js adds .snap and a page-wide flash). */
+.cta-btn{position:relative; isolation:isolate;}
+.cta-btn::before{
+  content:''; position:absolute; inset:-8px -10px; pointer-events:none;
+  --c:var(--ink); --l:11px; --t:1.5px;
+  background:
+    linear-gradient(var(--c),var(--c)) top left / var(--l) var(--t) no-repeat,
+    linear-gradient(var(--c),var(--c)) top left / var(--t) var(--l) no-repeat,
+    linear-gradient(var(--c),var(--c)) top right / var(--l) var(--t) no-repeat,
+    linear-gradient(var(--c),var(--c)) top right / var(--t) var(--l) no-repeat,
+    linear-gradient(var(--c),var(--c)) bottom left / var(--l) var(--t) no-repeat,
+    linear-gradient(var(--c),var(--c)) bottom left / var(--t) var(--l) no-repeat,
+    linear-gradient(var(--c),var(--c)) bottom right / var(--l) var(--t) no-repeat,
+    linear-gradient(var(--c),var(--c)) bottom right / var(--t) var(--l) no-repeat;
+  opacity:0; transform:scale(1.22);
+  transition:opacity .2s ease, transform .32s cubic-bezier(.2,.9,.25,1.25);
+}
+.cta-btn:hover::before, .cta-btn:focus-visible::before{
+  opacity:1; transform:scale(1);
+  animation:af-lock .5s steps(1) .3s 1;
+}
+@keyframes af-lock{ 0%{opacity:1} 25%{opacity:.15} 50%{opacity:1} 75%{opacity:.15} 100%{opacity:1} }
+.cta-btn::after{
+  content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background:radial-gradient(circle at 50% 50%, #fff 0%, rgba(255,255,255,.85) 35%, rgba(255,255,255,0) 72%);
+  opacity:0;
+}
+.cta-btn.snap{animation:shutter .32s cubic-bezier(.3,.7,.3,1);}
+.cta-btn.snap::after{animation:flash-pop .55s ease-out;}
+@keyframes shutter{ 0%{transform:scale(1)} 30%{transform:scale(.93)} 100%{transform:scale(1)} }
+@keyframes flash-pop{ 0%{opacity:0; transform:scale(.6)} 15%{opacity:1; transform:scale(1.25)} 100%{opacity:0; transform:scale(1.9)} }
+.page-flash{
+  position:fixed; inset:0; z-index:9999; pointer-events:none;
+  background:#fff; opacity:0; animation:page-flash .45s ease-out forwards;
+}
+@keyframes page-flash{ 0%{opacity:0} 12%{opacity:.22} 100%{opacity:0} }
+@media (prefers-reduced-motion:reduce){
+  .cta-btn::before{transition:opacity .2s ease; transform:none;}
+  .cta-btn:hover::before{animation:none;}
+  .cta-btn.snap, .cta-btn.snap::after, .page-flash{animation:none;}
+}
+
 .contact-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.3fr); gap:clamp(30px,5vw,70px); margin-top:40px;}
 .contact-block + .contact-block{margin-top:34px;}
 .contact-block h2{font-family:var(--serif); font-weight:400; font-size:17px; margin:0 0 10px; color:rgba(244,242,239,.9);}

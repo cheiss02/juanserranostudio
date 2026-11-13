@@ -211,6 +211,21 @@ function initGallery(opts){
   });
 }
 
+/* Camera "shutter + flash" on every .cta-btn press (styles in style.css). */
+document.addEventListener("click", function(e){
+  var btn = e.target.closest && e.target.closest(".cta-btn");
+  if (!btn) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  btn.classList.remove("snap");
+  void btn.offsetWidth; /* restart the animation on repeat clicks */
+  btn.classList.add("snap");
+  setTimeout(function(){ btn.classList.remove("snap"); }, 600);
+  var fl = document.createElement("div");
+  fl.className = "page-flash";
+  document.body.appendChild(fl);
+  setTimeout(function(){ if (fl.parentNode) fl.parentNode.removeChild(fl); }, 500);
+});
+
 window.initSiteChrome = initSiteChrome;
 window.initGallery = initGallery;
 })();
